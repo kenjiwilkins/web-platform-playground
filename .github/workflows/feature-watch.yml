@@ -30,7 +30,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR: ${{ github.event.pull_request.number }}
         run: |
-          if grep -q '新機能 \*\*0\*\* 件 / Baseline の変化 \*\*0\*\* 件' report.md; then exit 0; fi
+          if [ ! -s report.md ] || grep -q '新機能 \*\*0\*\* 件 / Baseline の変化 \*\*0\*\* 件' report.md; then exit 0; fi
           gh pr comment "$PR" --body-file report.md --edit-last --create-if-none
 
   issues:

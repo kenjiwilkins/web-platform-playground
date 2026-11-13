@@ -33,13 +33,19 @@ const { values } = parseArgs({
   },
 });
 
-const versionAt = (ref: string): string => {
-  const pkg = JSON.parse(
-    execFileSync('git', ['show', `${ref}:package.json`], { encoding: 'utf8' }),
-  ) as { devDependencies?: Record<string, string> };
-  const version = pkg.devDependencies?.['web-features'];
-  if (!version) throw new Error(`${ref} の package.json に web-features がありません`);
-  return version;
+/** ref 時点の web-features のバージョン。package.json がない・依存にないなら null */
+const versionAt = (ref: string): string | null => {
+  let raw: string;
+  try {
+    raw = execFileSync('git', ['show', `${ref}:package.json`], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+  } catch {
+    return null;
+  }
+  const pkg = JSON.parse(raw) as { devDependencies?: Record<string, string> };
+  return pkg.devDependencies?.['web-features'] ?? null;
 };
 
 const download = (version: string): Features => {
@@ -59,7 +65,15 @@ const newVersion = (
     version: string;
   }
 ).version;
-const oldVersion = values.base ? versionAt(values.base) : newVersion;
+const baseVersion = values.base ? versionAt(values.base) : newVersion;
+if (baseVersion === null) {
+  // 初回導入など、比較元に web-features がない場合は差分を出さない
+  console.log(`${values.base} に web-features がないため比較をスキップします`);
+  if (values.out) writeFileSync(values.out, '');
+  if (values['issues-json']) writeFileSync(values['issues-json'], '[]');
+  process.exit(0);
+}
+const oldVersion = baseVersion;
 const before: Features =
   oldVersion === newVersion ? (current.features as Features) : download(oldVersion);
 const after = current.features as Features;
