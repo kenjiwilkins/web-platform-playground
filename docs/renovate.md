@@ -51,3 +51,4 @@ E2E が落ちたら、依存関係の不具合ではなく**ブラウザの挙�
 
 `renovate/*` ブランチではプレビューデプロイを作らない（`vercel.json` の `git.deploymentEnabled`）。
 UI に関係しない更新が大半で、ビルド時間の無駄になるため。見た目を確かめたい更新は手元でビルドする。
+自動マージ後の本番デプロイも、devDependencies だけの更新などではビルドを省く（[deploy.md](deploy.md)）。
