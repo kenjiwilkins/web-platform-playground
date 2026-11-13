@@ -1,10 +1,20 @@
-import { categoryLabels, loadPlaygrounds, type Category, type Playground } from '@wpp/schema';
+import {
+  categoryLabels,
+  loadPlaygrounds,
+  parseOrigin,
+  type Category,
+  type Playground,
+} from '@wpp/schema';
 import webFeatures from 'web-features/data.json' with { type: 'json' };
 
 export { categoryLabels };
 export type { Category, Playground };
 
-export const sandboxOrigin = import.meta.env.PUBLIC_SANDBOX_ORIGIN ?? 'http://localhost:4322';
+export const sandboxOrigin = parseOrigin(
+  import.meta.env.PUBLIC_SANDBOX_ORIGIN,
+  'PUBLIC_SANDBOX_ORIGIN',
+  'http://localhost:4322',
+);
 
 let cache: Playground[] | undefined;
 export const getPlaygrounds = () => (cache ??= loadPlaygrounds());
