@@ -1,0 +1,114 @@
+// Renovate 設定。方針は docs/renovate.md を参照。
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    ':semanticCommits',
+    ':pinAllExceptPeerDependencies',
+    'helpers:pinGitHubActionDigests',
+  ],
+  timezone: 'Asia/Tokyo',
+  schedule: ['before 9am on monday'],
+  prConcurrentLimit: 5,
+  prHourlyLimit: 0,
+  labels: ['deps'],
+  // 公開直後に取り下げられるリリースを避ける（pnpm-workspace.yaml の minimumReleaseAge と揃える）
+  minimumReleaseAge: '3 days',
+  internalChecksFilter: 'strict',
+  postUpdateOptions: ['pnpmDedupe'],
+  // Ruleset の必須チェックが通ってから GitHub 側でマージさせる
+  platformAutomerge: true,
+  lockFileMaintenance: {
+    enabled: true,
+    automerge: true,
+  },
+  vulnerabilityAlerts: {
+    schedule: ['at any time'],
+    minimumReleaseAge: null,
+    labels: ['security'],
+  },
+  packageRules: [
+    // ── 汎用ルール（後ろのルールほど優先されるので先頭に置く）
+    {
+      description: '1.0 以上の patch は自動マージ',
+      matchUpdateTypes: ['patch'],
+      matchCurrentVersion: '!/^0\\./',
+      automerge: true,
+    },
+    {
+      description: 'major は Dependency Dashboard で承認したものだけ PR を作る',
+      matchUpdateTypes: ['major'],
+      dependencyDashboardApproval: true,
+      labels: ['deps', 'deps:major'],
+    },
+
+    // ── 新機能検知の起点。更新 PR に feature-watch が差分をコメントし、マージ後に Issue を起票する
+    {
+      description: 'ブラウザ互換データ',
+      groupName: 'web compat data',
+      matchPackageNames: ['@mdn/browser-compat-data', 'web-features'],
+      schedule: ['at any time'],
+      minimumReleaseAge: '1 day',
+      automerge: true,
+      dependencyDashboardApproval: false,
+      labels: ['deps', 'deps:compat-data'],
+    },
+
+    // ── Playwright を上げるとテスト用ブラウザのビルドも変わる。依存の問題ではなくブラウザの変化なので人が見る
+    {
+      description: 'Playwright（ブラウザ更新）',
+      groupName: 'playwright',
+      matchPackageNames: ['@playwright/test', 'playwright', 'playwright-core'],
+      automerge: false,
+      labels: ['deps', 'deps:browsers'],
+    },
+
+    // ── 一緒に上げないと壊れるもの
+    {
+      groupName: 'astro',
+      matchPackageNames: ['astro', '@astrojs/**'],
+    },
+    {
+      groupName: 'codemirror',
+      matchPackageNames: ['codemirror', '@codemirror/**', '@lezer/**'],
+    },
+    {
+      groupName: 'lint & format',
+      matchPackageNames: [
+        'eslint',
+        '@eslint/**',
+        'eslint-plugin-*',
+        'typescript-eslint',
+        'globals',
+        'prettier',
+        'prettier-plugin-*',
+      ],
+      matchUpdateTypes: ['minor', 'patch'],
+      automerge: true,
+    },
+    {
+      description: 'TypeScript は minor でも型エラーが出うるので自動マージしない',
+      matchPackageNames: ['typescript'],
+      automerge: false,
+    },
+    {
+      groupName: 'github actions',
+      matchManagers: ['github-actions'],
+      matchUpdateTypes: ['minor', 'patch', 'digest', 'pinDigest'],
+      automerge: true,
+    },
+
+    // ── ランタイム
+    {
+      description: 'Node.js は偶数メジャー（LTS 系）だけ追従',
+      matchDepNames: ['node'],
+      allowedVersions: '/^\\d*[02468]\\./',
+    },
+    {
+      description: '@types/node は .nvmrc のメジャーに合わせて手動で上げる',
+      matchPackageNames: ['@types/node'],
+      matchUpdateTypes: ['major'],
+      enabled: false,
+    },
+  ],
+}

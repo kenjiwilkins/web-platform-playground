@@ -1,0 +1,37 @@
+---
+import BaselineBadge from './BaselineBadge.astro';
+import { baselineOf, categoryLabels, type Playground } from '../lib/data';
+
+interface Props {
+  pg: Playground;
+}
+const { pg } = Astro.props;
+const baseline = baselineOf(pg);
+---
+
+<a class="wp-card" href={`/${pg.path}/`}>
+  <div class="row">
+    <span class="wp-cat" data-cat={pg.category}>
+      {categoryLabels[pg.category]}
+    </span>
+    {pg.group && <span class="muted">{pg.group}</span>}
+  </div>
+  <span class="wp-card-title">{pg.meta.title}</span>
+  <span class="wp-card-desc">{pg.meta.summary}</span>
+  <div class="row">
+    <BaselineBadge status={baseline.status} />
+    <span class="muted added">{pg.meta.added}</span>
+  </div>
+</a>
+
+<style>
+  .row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--caption-size);
+  }
+  .added {
+    margin-left: auto;
+  }
+</style>

@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+dist/
+.astro/
+.turbo/
+# Playground のコードは「素の書き方」を残すため整形しない
+playgrounds/**/*.html
+playgrounds/**/*.css
+playgrounds/**/*.js
+.vercel/

@@ -1,0 +1,28 @@
+---
+import { baselineLabels, type BaselineStatus } from '../lib/data';
+
+interface Props {
+  status: BaselineStatus;
+  since?: string | undefined;
+}
+const { status, since } = Astro.props;
+// 色だけに頼らず、記号とテキストを必ず添える
+const icons: Record<BaselineStatus, string> = {
+  widely: '✓',
+  newly: '◆',
+  limited: '▲',
+  unknown: '?',
+};
+---
+
+<span class="wp-badge" data-status={status}>
+  <span aria-hidden="true">{icons[status]}</span>
+  {baselineLabels[status]}
+  {since && <span class="since">({since})</span>}
+</span>
+
+<style>
+  .since {
+    font-weight: 400;
+  }
+</style>

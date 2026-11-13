@@ -1,0 +1,39 @@
+{
+  "name": "web-platform-playground",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck && tsc -p tsconfig.json",
+    "test": "turbo run test",
+    "test:e2e": "playwright test",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "new": "tsx tools/scaffold/index.ts",
+    "feature-watch": "tsx tools/feature-watch/index.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@mdn/browser-compat-data": "8.1.9",
+    "@playwright/test": "1.65.0",
+    "@types/node": "^24.19.2",
+    "@wpp/schema": "workspace:*",
+    "eslint": "10.14.0",
+    "eslint-plugin-astro": "3.2.1",
+    "globals": "17.14.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
+    "tsx": "4.23.15",
+    "turbo": "2.11.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2",
+    "web-features": "3.46.0",
+    "yaml": "2.9.1",
+    "zod": "4.6.7"
+  }
+}

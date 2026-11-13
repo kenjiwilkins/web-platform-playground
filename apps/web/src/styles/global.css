@@ -1,0 +1,202 @@
+/* デザインシステム（packages/tokens）のトークンだけを使う。色の直書きはしない。 */
+@import '@wpp/tokens/tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--body-size);
+  line-height: var(--body-line);
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+a:hover {
+  color: var(--accent-hover);
+}
+
+:focus-visible {
+  outline: var(--bw-2) solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: var(--code-inline-size);
+}
+
+h1 {
+  font-size: var(--heading-1-size);
+  line-height: var(--heading-1-line);
+  margin: 0;
+}
+h2 {
+  font-size: var(--heading-2-size);
+  line-height: var(--heading-2-line);
+  margin: var(--space-6) 0 var(--space-3);
+}
+
+.container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* ── Button */
+.wp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border: var(--bw-1) solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-standard);
+}
+.wp-btn:hover {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+.wp-btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.wp-btn-primary:hover {
+  background: var(--accent-hover);
+  color: var(--on-accent);
+}
+.wp-btn-primary:active {
+  background: var(--accent-active);
+}
+
+/* ── Badge / tags */
+.wp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--label-size);
+  line-height: var(--label-line);
+  font-weight: var(--label-weight);
+  white-space: nowrap;
+}
+.wp-badge[data-status='widely'] {
+  color: var(--baseline-widely);
+  background: var(--baseline-widely-bg);
+}
+.wp-badge[data-status='newly'] {
+  color: var(--baseline-newly);
+  background: var(--baseline-newly-bg);
+}
+.wp-badge[data-status='limited'] {
+  color: var(--baseline-limited);
+  background: var(--baseline-limited-bg);
+}
+.wp-badge[data-status='unknown'] {
+  color: var(--baseline-deprecated);
+  background: var(--baseline-deprecated-bg);
+}
+.wp-cat {
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+}
+.wp-cat[data-cat='html'] {
+  color: var(--cat-html);
+  background: var(--cat-html-bg);
+}
+.wp-cat[data-cat='css'] {
+  color: var(--cat-css);
+  background: var(--cat-css-bg);
+}
+.wp-cat[data-cat='js'] {
+  color: var(--cat-js);
+  background: var(--cat-js-bg);
+}
+.wp-cat[data-cat='api'] {
+  color: var(--cat-api);
+  background: var(--cat-api-bg);
+}
+.wp-tag {
+  font-size: var(--caption-size);
+  color: var(--text-muted);
+  border: var(--bw-1) solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 0 var(--space-2);
+}
+
+/* ── Card */
+.wp-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: var(--bw-1) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  color: var(--text);
+  text-decoration: none;
+}
+.wp-card:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.wp-card-title {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+.wp-card-desc {
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-line);
+  color: var(--text-muted);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ── Tabs */
+.wp-tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: var(--bw-1) solid var(--border);
+}
+.wp-tab {
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-bottom: var(--bw-2) solid transparent;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  cursor: pointer;
+  text-decoration: none;
+}
+.wp-tab[aria-selected='true'],
+.wp-tab[aria-current='page'] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}

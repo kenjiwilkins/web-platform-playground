@@ -1,0 +1,324 @@
+---
+import { iframeAllow, type PlaygroundMeta, type VariantFiles } from '@wpp/schema';
+import { sandboxOrigin } from '../lib/data';
+
+interface Props {
+  files: VariantFiles;
+  /** sandbox 上の runner のパス（Playground ごとにヘッダが違う） */
+  runnerPath: string;
+  detect?: string | undefined;
+  requires?: PlaygroundMeta['requires'];
+  /** 埋め込み用: 高さを親に合わせる */
+  embed?: boolean;
+}
+
+const {
+  files,
+  runnerPath,
+  detect,
+  requires = { secureContext: false, crossOriginIsolated: false, permissions: [] },
+  embed = false,
+} = Astro.props;
+const config = { files, runnerPath, detect, sandboxOrigin };
+---
+
+<section class:list={['workspace', { embed }]} data-workspace>
+  <script type="application/json" data-config set:html={JSON.stringify(config)} />
+  <div class="pane editor-pane">
+    <div class="pane-header">
+      <div class="wp-tabs" role="tablist">
+        <button class="wp-tab" role="tab" data-file="html" aria-selected="false">
+          index.html
+        </button>
+        <button class="wp-tab" role="tab" data-file="css" aria-selected="false">
+          style.css
+        </button>
+        <button class="wp-tab" role="tab" data-file="js" aria-selected="false">
+          main.js
+        </button>
+      </div>
+      <div class="actions">
+        <label class="auto">
+          <input type="checkbox" data-auto checked /> 自動実行
+        </label>
+        <button class="wp-btn" type="button" data-reset>
+          リセット
+        </button>
+        <button class="wp-btn wp-btn-primary" type="button" data-run>
+          実行 ⌘↵
+        </button>
+      </div>
+    </div>
+    <div class="editor" data-editor></div>
+  </div>
+  <div class="pane preview-pane">
+    <div class="pane-header">
+      <span class="muted origin">{new URL(runnerPath, sandboxOrigin).host}</span>
+      <span class="status" data-run-status="idle" aria-live="polite"></span>
+    </div>
+    <iframe
+      title="プレビュー"
+      data-preview
+      sandbox="allow-scripts allow-same-origin allow-modals allow-forms allow-popups"
+      allow={iframeAllow({ requires }) || undefined}
+    ></iframe>
+  </div>
+  <div class="pane console-pane">
+    <div class="pane-header">
+      <span>コンソール</span>
+      <span class="detect" data-detect hidden></span>
+      <button class="wp-btn" type="button" data-clear>
+        クリア
+      </button>
+    </div>
+    <ol class="console" data-console></ol>
+  </div>
+</section>
+
+<script>
+  import { createSandboxHost, type SandboxToParent } from '@wpp/runtime';
+  import { createEditorState, EditorView, type FileKind } from '../lib/editor';
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-workspace]')) {
+    const config = JSON.parse(root.querySelector('[data-config]')!.textContent!) as {
+      files: Record<FileKind, string>;
+      runnerPath: string;
+      detect?: string;
+      sandboxOrigin: string;
+    };
+    const $ = <T extends Element>(sel: string) => root.querySelector<T>(sel)!;
+    const consoleList = $<HTMLOListElement>('[data-console]');
+    const status = $<HTMLElement>('[data-run-status]');
+    const detectEl = $<HTMLElement>('[data-detect]');
+    const auto = $<HTMLInputElement>('[data-auto]');
+
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const scheduleRun = () => {
+      if (!auto.checked) return;
+      clearTimeout(timer);
+      timer = setTimeout(run, 600);
+    };
+
+    const kinds: FileKind[] = ['html', 'css', 'js'];
+    const states = Object.fromEntries(
+      kinds.map((k) => [k, createEditorState(config.files[k], k, scheduleRun)]),
+    ) as Record<FileKind, ReturnType<typeof createEditorState>>;
+    const view = new EditorView({ parent: $('[data-editor]'), state: states.css });
+
+    let active: FileKind = 'css';
+    const tabs = root.querySelectorAll<HTMLButtonElement>('[data-file]');
+    const select = (kind: FileKind) => {
+      states[active] = view.state;
+      active = kind;
+      view.setState(states[kind]);
+      tabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.file === kind)));
+    };
+    tabs.forEach((tab) =>
+      tab.addEventListener('click', () => select(tab.dataset.file as FileKind)),
+    );
+    // 中身がある最初のファイルを開く（CSS の Playground なら CSS）
+    select(
+      kinds.find((k) => k === 'css' && config.files.css) ??
+        kinds.find((k) => config.files[k]) ??
+        'html',
+    );
+
+    const print = (level: string, text: string) => {
+      const li = document.createElement('li');
+      li.dataset.level = level;
+      li.textContent = text;
+      consoleList.append(li);
+      li.scrollIntoView({ block: 'nearest' });
+    };
+
+    const host = createSandboxHost({
+      iframe: $<HTMLIFrameElement>('[data-preview]'),
+      sandboxOrigin: config.sandboxOrigin,
+      runnerPath: config.runnerPath,
+      onMessage(message: SandboxToParent) {
+        switch (message.type) {
+          case 'wpp:console':
+            print(message.level, message.args.join(' '));
+            break;
+          case 'wpp:error':
+            print('error', message.message);
+            status.dataset.runStatus = 'error';
+            status.textContent = 'エラー';
+            break;
+          case 'wpp:detect':
+            detectEl.hidden = false;
+            detectEl.dataset.ok = String(message.ok);
+            detectEl.textContent = `${message.ok ? '✓ 対応' : '✗ 未対応'}: ${message.expression}`;
+            break;
+          case 'wpp:done':
+            if (status.dataset.runStatus !== 'error') {
+              status.dataset.runStatus = 'ok';
+              status.textContent = '実行完了';
+            }
+            break;
+        }
+      },
+    });
+
+    function run() {
+      states[active] = view.state;
+      consoleList.replaceChildren();
+      status.dataset.runStatus = 'running';
+      status.textContent = '実行中…';
+      host.run({
+        html: states.html.doc.toString(),
+        css: states.css.doc.toString(),
+        js: states.js.doc.toString(),
+        detect: config.detect,
+      });
+    }
+
+    $('[data-run]').addEventListener('click', run);
+    $('[data-clear]').addEventListener('click', () => consoleList.replaceChildren());
+    $('[data-reset]').addEventListener('click', () => {
+      for (const k of kinds) states[k] = createEditorState(config.files[k], k, scheduleRun);
+      view.setState(states[active]);
+      run();
+    });
+    root.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+        event.preventDefault();
+        run();
+      }
+    });
+    run();
+  }
+</script>
+
+<style>
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-areas: 'editor preview' 'editor console';
+    height: min(72vh, 720px);
+    border: var(--bw-1) solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .workspace.embed {
+    height: 100vh;
+    border-radius: 0;
+  }
+  .pane {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .editor-pane {
+    grid-area: editor;
+    border-right: var(--bw-1) solid var(--border);
+  }
+  .preview-pane {
+    grid-area: preview;
+  }
+  .console-pane {
+    grid-area: console;
+    border-top: var(--bw-1) solid var(--border);
+    background: var(--surface-sunken);
+  }
+  .pane-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-3);
+    min-height: 40px;
+    border-bottom: var(--bw-1) solid var(--border);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+  }
+  .pane-header .wp-tabs {
+    border: 0;
+  }
+  .actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .auto {
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .editor {
+    flex: 1;
+    min-height: 0;
+  }
+  .origin {
+    font-family: var(--font-mono);
+    font-weight: 400;
+  }
+  .status {
+    margin-left: auto;
+    font-weight: 400;
+  }
+  .status[data-run-status='ok'] {
+    color: var(--success);
+  }
+  .status[data-run-status='error'] {
+    color: var(--danger);
+  }
+  /* プレビューは素のブラウザ表示を見る場所なので、背景を白に固定する以外は何もしない */
+  iframe {
+    flex: 1;
+    width: 100%;
+    border: 0;
+    background: white;
+  }
+  .detect {
+    font-family: var(--font-mono);
+    font-weight: 400;
+  }
+  .detect[data-ok='true'] {
+    color: var(--success);
+  }
+  .detect[data-ok='false'] {
+    color: var(--warning);
+  }
+  .console-pane .wp-btn {
+    margin-left: auto;
+  }
+  .console {
+    flex: 1;
+    overflow: auto;
+    margin: 0;
+    padding: var(--space-2) 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: var(--code-sm-size);
+    line-height: var(--code-sm-line);
+  }
+  .console :global(li) {
+    padding: 0 var(--space-3);
+    color: var(--console-log);
+    white-space: pre-wrap;
+  }
+  .console :global(li[data-level='info']) {
+    color: var(--console-info);
+  }
+  .console :global(li[data-level='warn']) {
+    color: var(--console-warn);
+    background: var(--console-warn-bg);
+  }
+  .console :global(li[data-level='error']) {
+    color: var(--console-error);
+    background: var(--console-error-bg);
+  }
+  @media (max-width: 900px) {
+    .workspace {
+      grid-template-columns: 1fr;
+      grid-template-rows: 360px 320px 200px;
+      grid-template-areas: 'editor' 'preview' 'console';
+      height: auto;
+    }
+    .editor-pane {
+      border-right: 0;
+    }
+  }
+</style>

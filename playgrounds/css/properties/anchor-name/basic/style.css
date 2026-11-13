@@ -1,0 +1,14 @@
+.anchor {
+  anchor-name: --my-anchor;
+  margin: 120px;
+}
+
+.tooltip {
+  position: absolute;
+  position-anchor: --my-anchor;
+  top: anchor(bottom);
+  left: anchor(center);
+  translate: -50% 8px;
+  padding: 4px 8px;
+  border: 1px solid;
+}

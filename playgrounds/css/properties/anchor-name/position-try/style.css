@@ -1,0 +1,24 @@
+.scroller {
+  height: 200px;
+  overflow: auto;
+  border: 1px solid;
+}
+
+.scroller::after {
+  content: '';
+  display: block;
+  height: 600px;
+}
+
+.anchor {
+  anchor-name: --a;
+  margin-top: 160px;
+}
+
+.tooltip {
+  position: absolute;
+  position-anchor: --a;
+  position-area: bottom;
+  position-try-fallbacks: flip-block;
+  border: 1px solid;
+}
