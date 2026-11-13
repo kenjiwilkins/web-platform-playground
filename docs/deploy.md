@@ -9,6 +9,10 @@ Vercel のプロジェクトは2つ。どちらも `main` へのマージが本�
 
 チームのスコープは `michael-kenji-wilkins-projects`。プレビューの URL は
 `<プロジェクト名>-<hash>-<スコープ>.vercel.app` と `<プロジェクト名>-git-<ブランチ>-<スコープ>.vercel.app` になる。
+ただしサブドメインは 1 ラベル 63 文字までなので、長いときは Vercel が短縮する。
+このリポジトリではブランチ用の URL が `webplatform-playgroun-git-5fcc55-michael-kenji-wilkins-projects.vercel.app` のように、
+プロジェクト名が 21 文字（`webplatform-playgroun`）に切られ、ブランチ名はハッシュになる。
+パターンはこの短縮後の共通部分に合わせる。
 
 ## 環境変数
 
@@ -19,7 +23,7 @@ Vercel のプロジェクトは2つ。どちらも `main` へのマージが本�
 | sandbox      | `PARENT_ORIGINS`        | 本番の web と web のプレビューのパターン（下記） | 使わない                       |
 
 ```
-PARENT_ORIGINS=https://web-amber-theta-23.vercel.app,https://webplatform-playground-*-michael-kenji-wilkins-projects.vercel.app
+PARENT_ORIGINS=https://web-amber-theta-23.vercel.app,https://webplatform-playgroun*-michael-kenji-wilkins-projects.vercel.app
 ```
 
 値はビルド時に検証される（`packages/schema/src/origin.ts`）。スキームの付け忘れやパス付きの値はビルドが止まる。
@@ -47,7 +51,7 @@ PARENT_ORIGINS=https://web-amber-theta-23.vercel.app,https://webplatform-playgro
    - `*` は 1 つだけ、ホストの先頭ラベルの中に置き、前後に固定の文字列が要る。
      `*` は英小文字・数字・ハイフンにだけ一致し、ドットをまたがない（`packages/runtime/src/origin.ts`）。
    - `https://*.vercel.app` のような広いパターンはビルドで止める。誰でもデプロイできるドメインなので。
-   - 残るリスク: 他人が `webplatform-playground-x-michael-kenji-wilkins-projects` という名前のプロジェクトを作ると、
+   - 残るリスク: 他人が `webplatform-playgrounx-michael-kenji-wilkins-projects` という名前のプロジェクトを作ると、
      その本番 URL がパターンに一致する。sandbox のオリジンには Cookie もストレージも守るべきデータがなく、
      できるのは「sandbox でコードを実行させる」ことだけなので許容する。
    - runner は `wpp:ready` を宛先を絞らずに送る（パターンには送れないため）。中身のない合図なので問題ない。
