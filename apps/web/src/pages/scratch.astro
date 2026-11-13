@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Workspace from '../components/Workspace.astro';
+---
+
+<Base title="Scratch" description="空の Playground" noindex>
+  <div class="container">
+    <h1 class="title">Scratch</h1>
+    <Workspace
+      files={{ html: '<p>Hello</p>\n', css: '', js: "console.log('ready');\n" }}
+      runnerPath="/run/scratch/"
+    />
+  </div>
+</Base>
+
+<style>
+  .title {
+    padding-block: var(--space-5) var(--space-3);
+  }
+</style>

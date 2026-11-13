@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "turbo run build --filter=@wpp/sandbox",
+  "git": {
+    "deploymentEnabled": {
+      "renovate/*": false
+    }
+  }
+}

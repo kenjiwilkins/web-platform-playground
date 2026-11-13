@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import BaselineBadge from '../components/BaselineBadge.astro';
+import Workspace from '../components/Workspace.astro';
+import { baselineOf, categoryLabels, getPlaygrounds, mdnUrl, type Playground } from '../lib/data';
+
+// /css/properties/anchor-name/ と /css/properties/anchor-name/<variant>/ を生成する
+export function getStaticPaths() {
+  return getPlaygrounds().flatMap((pg) =>
+    pg.variants.map((variant, i) => ({
+      params: { path: i === 0 ? pg.path : `${pg.path}/${variant.name}` },
+      props: { pg, variantIndex: i },
+    })),
+  );
+}
+
+interface Props {
+  pg: Playground;
+  variantIndex: number;
+}
+const { pg, variantIndex } = Astro.props;
+const variant = pg.variants[variantIndex]!;
+const baseline = baselineOf(pg);
+const { meta } = pg;
+---
+
+<Base
+  title={meta.title}
+  description={meta.summary}
+  canonical={`/${pg.path}/`}
+  current={pg.category}
+>
+  <div class="container">
+    <nav class="breadcrumb muted" aria-label="パンくず">
+      <a href={`/${pg.category}/`}>{categoryLabels[pg.category]}</a>
+      {pg.group && <> › {pg.group}</>} › {meta.title}
+    </nav>
+
+    <header class="feature-header">
+      <h1>
+        <code>{meta.title}</code>
+      </h1>
+      <BaselineBadge status={baseline.status} since={baseline.since} />
+      <p class="muted summary">{meta.summary}</p>
+      <div class="links">
+        {meta.mdn && <a href={mdnUrl(meta.mdn)}>MDN</a>}
+        {meta.spec && <a href={meta.spec}>仕様</a>}
+        {meta.tags.map((tag) => (
+          <span class="wp-tag">{tag}</span>
+        ))}
+      </div>
+    </header>
+
+    {pg.variants.length > 1 && (
+      <nav class="wp-tabs variants" aria-label="バリアント">
+        {pg.variants.map((v, i) => (
+          <a
+            class="wp-tab"
+            href={i === 0 ? `/${pg.path}/` : `/${pg.path}/${v.name}/`}
+            aria-current={i === variantIndex ? 'page' : undefined}
+          >
+            {v.name}
+          </a>
+        ))}
+      </nav>
+    )}
+
+    <Workspace
+      files={variant.files}
+      runnerPath={`/run/${pg.path}/`}
+      detect={meta.detect}
+      requires={meta.requires}
+    />
+
+    <section>
+      <h2>要件</h2>
+      <ul class="requires">
+        <li>Secure context: {meta.requires.secureContext ? '必要' : '不要'}</li>
+        <li>Cross-origin isolated: {meta.requires.crossOriginIsolated ? '必要' : '不要'}</li>
+        <li>
+          Permissions:{' '}
+          {meta.requires.permissions.length ? meta.requires.permissions.join(', ') : 'なし'}
+        </li>
+      </ul>
+    </section>
+
+    {pg.readme && (
+      <section class="notes">
+        <h2>メモ</h2>
+        <pre class="readme">{pg.readme}</pre>
+      </section>
+    )}
+  </div>
+</Base>
+
+<style>
+  .breadcrumb {
+    padding-block: var(--space-4) var(--space-2);
+    font-size: var(--caption-size);
+  }
+  .feature-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .feature-header code {
+    font-size: inherit;
+  }
+  .summary {
+    flex-basis: 100%;
+    margin: 0;
+  }
+  .links {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  .variants {
+    margin-bottom: var(--space-3);
+  }
+  .requires {
+    color: var(--text-muted);
+  }
+  .readme {
+    white-space: pre-wrap;
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-line);
+  }
+</style>

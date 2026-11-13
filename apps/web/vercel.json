@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "astro",
+  "buildCommand": "turbo run build --filter=@wpp/web",
+  "git": {
+    "deploymentEnabled": {
+      "renovate/*": false
+    }
+  },
+  "headers": [
+    {
+      "source": "/embed/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
+      "source": "/scratch/",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    }
+  ]
+}

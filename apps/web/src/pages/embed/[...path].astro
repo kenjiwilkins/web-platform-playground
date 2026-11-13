@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import Workspace from '../../components/Workspace.astro';
+import { getPlaygrounds, type Playground } from '../../lib/data';
+
+// ブログなどへの埋め込み用。サイトのヘッダ・フッタなし、検索エンジンには本体ページを正規 URL として示す
+export function getStaticPaths() {
+  return getPlaygrounds().flatMap((pg) =>
+    pg.variants.map((variant, i) => ({
+      params: { path: i === 0 ? pg.path : `${pg.path}/${variant.name}` },
+      props: { pg, variantIndex: i },
+    })),
+  );
+}
+
+interface Props {
+  pg: Playground;
+  variantIndex: number;
+}
+const { pg, variantIndex } = Astro.props;
+---
+
+<Base title={pg.meta.title} canonical={`/${pg.path}/`} noindex bare>
+  <Workspace
+    files={pg.variants[variantIndex]!.files}
+    runnerPath={`/run/${pg.path}/`}
+    detect={pg.meta.detect}
+    requires={pg.meta.requires}
+    embed
+  />
+</Base>

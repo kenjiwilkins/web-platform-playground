@@ -1,0 +1,10 @@
+title: anchor-name
+summary: 要素を「アンカー」として名前付けし、別の要素をその位置に合わせて配置する（CSS Anchor Positioning）。
+mdn: Web/CSS/anchor-name
+spec: https://drafts.csswg.org/css-anchor-position-1/#name
+webFeature: anchor-positioning
+bcd: css.properties.anchor-name
+detect: CSS.supports('anchor-name', '--a')
+tags: [layout, popover, top-layer]
+added: 2026-11-13
+variants: [basic, position-try]

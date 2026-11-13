@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import BaselineBadge from '../../components/BaselineBadge.astro';
+import { baselineOf, categoryLabels, getPlaygrounds, type Category } from '../../lib/data';
+
+export function getStaticPaths() {
+  return Object.keys(categoryLabels).map((category) => ({ params: { category } }));
+}
+
+const category = Astro.params.category as Category;
+const label = categoryLabels[category];
+const items = getPlaygrounds().filter((pg) => pg.category === category);
+---
+
+<Base
+  title={label}
+  description={`${label} の Playground 一覧（${items.length} 件）`}
+  current={category}
+>
+  <div class="container">
+    <nav class="breadcrumb muted" aria-label="パンくず">
+      <a href="/">ホーム</a> › {label}
+    </nav>
+    <h1>
+      {label} <span class="muted count">{items.length} 件</span>
+    </h1>
+
+    {items.length === 0 ? (
+      <p class="muted">
+        まだ Playground がありません。<code>pnpm new {category}/…</code> で追加できます。
+      </p>
+    ) : (
+      <table class="list">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>説明</th>
+            <th>Baseline</th>
+            <th>追加日</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((pg) => (
+            <tr>
+              <td>
+                <a class="name" href={`/${pg.path}/`}>
+                  {pg.meta.title}
+                </a>
+                {pg.group && <div class="muted group">{pg.group}</div>}
+              </td>
+              <td class="desc">{pg.meta.summary}</td>
+              <td>
+                <BaselineBadge status={baselineOf(pg).status} />
+              </td>
+              <td class="muted">{pg.meta.added}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+</Base>
+
+<style>
+  .breadcrumb {
+    padding-block: var(--space-4) var(--space-2);
+    font-size: var(--caption-size);
+  }
+  .count {
+    font-size: var(--body-size);
+    font-weight: 400;
+  }
+  .list {
+    width: 100%;
+    margin-top: var(--space-5);
+    border-collapse: collapse;
+    font-size: var(--body-sm-size);
+  }
+  th {
+    text-align: left;
+    color: var(--text-subtle);
+    font-size: var(--label-size);
+    border-bottom: var(--bw-1) solid var(--border);
+    padding: var(--space-2);
+  }
+  td {
+    padding: var(--space-3) var(--space-2);
+    border-bottom: var(--bw-1) solid var(--border);
+    vertical-align: top;
+  }
+  .name {
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+  .group {
+    font-size: var(--caption-size);
+  }
+  .desc {
+    color: var(--text-muted);
+  }
+</style>

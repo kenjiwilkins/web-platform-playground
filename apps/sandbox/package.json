@@ -1,0 +1,16 @@
+{
+  "name": "@wpp/sandbox",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node --experimental-strip-types build.mjs",
+    "dev": "node --experimental-strip-types build.mjs && node serve.mjs",
+    "preview": "node serve.mjs"
+  },
+  "dependencies": {
+    "@wpp/runtime": "workspace:*",
+    "@wpp/schema": "workspace:*",
+    "esbuild": "0.28.2"
+  }
+}

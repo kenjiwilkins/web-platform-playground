@@ -1,0 +1,58 @@
+# web-features の更新を「新機能の通知」に変える。
+# - Renovate の PR: 新旧バージョンの差分（新機能・Baseline の変化）を PR にコメントする
+# - main への push: Playground がまだない機能を Issue として起票する
+name: Feature watch
+
+on:
+  pull_request:
+    paths: [package.json, pnpm-lock.yaml]
+  push:
+    branches: [main]
+    paths: [package.json, pnpm-lock.yaml]
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - run: pnpm feature-watch --base origin/${{ github.base_ref }} --out report.md
+      - name: PR にコメント（前回のコメントがあれば更新）
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          if grep -q '新機能 \*\*0\*\* 件 / Baseline の変化 \*\*0\*\* 件' report.md; then exit 0; fi
+          gh pr comment "$PR" --body-file report.md --edit-last --create-if-none
+
+  issues:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+      - uses: ./.github/actions/setup
+      - run: pnpm feature-watch --base HEAD~1 --issues-json issues.json
+      - name: Issue を起票（同じタイトルの Issue があればスキップ）
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create feature-watch --color 004225 --force >/dev/null
+          jq -c '.[]' issues.json | while read -r item; do
+            title=$(jq -r .title <<<"$item")
+            if gh issue list --state all --search "\"$title\" in:title" --json title -q '.[].title' | grep -Fxq "$title"; then
+              continue
+            fi
+            gh issue create --title "$title" --body "$(jq -r .body <<<"$item")" --label feature-watch
+          done

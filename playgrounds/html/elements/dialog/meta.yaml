@@ -1,0 +1,9 @@
+title: <dialog>
+summary: モーダル／非モーダルのダイアログ。showModal() でトップレイヤーに表示し、Esc で閉じられる。
+mdn: Web/HTML/Reference/Elements/dialog
+spec: https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element
+webFeature: dialog
+bcd: html.elements.dialog
+detect: typeof HTMLDialogElement === 'function'
+tags: [top-layer, forms]
+added: 2026-11-13

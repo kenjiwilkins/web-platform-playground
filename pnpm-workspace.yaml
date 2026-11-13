@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+
+# サプライチェーン対策: 公開から3日未満のバージョンは解決しない（Renovate の minimumReleaseAge と揃える）
+minimumReleaseAge: 4320
+minimumReleaseAgeExclude:
+  - '@mdn/browser-compat-data'
+  - web-features
+
+# install スクリプトの実行を明示的に許可したものだけに限定する
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

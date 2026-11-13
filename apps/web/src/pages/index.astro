@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import { categoryLabels, getPlaygrounds, type Category } from '../lib/data';
+
+const playgrounds = getPlaygrounds();
+const newest = [...playgrounds]
+  .sort((a, b) => b.meta.added.localeCompare(a.meta.added))
+  .slice(0, 8);
+const counts = Object.keys(categoryLabels).map((key) => ({
+  key: key as Category,
+  label: categoryLabels[key as Category],
+  count: playgrounds.filter((pg) => pg.category === key).length,
+}));
+---
+
+<Base
+  title="Web Platform Playground"
+  description="HTML / CSS / JavaScript / Web API をブラウザで試し、新機能が出るたびに動作を確かめる Playground。"
+>
+  <section class="container hero">
+    <h1>Web の機能を、書いて確かめる。</h1>
+    <p class="muted">
+      HTML・CSS・JavaScript・Web API を {playgrounds.length} 個の Playground で。新しい機能が
+      Baseline に入るたびに追加していきます。
+    </p>
+  </section>
+
+  <section class="container">
+    <h2>新着 Playground</h2>
+    <div class="grid">
+      {newest.map((pg) => (
+        <FeatureCard pg={pg} />
+      ))}
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>カテゴリ</h2>
+    <div class="grid">
+      {counts.map((c) => (
+        <a class="wp-card" href={`/${c.key}/`}>
+          <span class="wp-cat" data-cat={c.key}>
+            {c.label}
+          </span>
+          <span class="muted">{c.count} Playgrounds</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: var(--space-8) var(--space-5);
+  }
+  .hero h1 {
+    font-size: var(--display-size);
+    line-height: var(--display-line);
+  }
+</style>
