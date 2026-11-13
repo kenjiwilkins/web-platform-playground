@@ -22,11 +22,36 @@ export function parseOrigin(value: string | undefined, name: string, fallback: s
   return url.origin;
 }
 
-/** カンマ区切りのオリジン一覧。各要素に parseOrigin と同じ検証をかける。 */
+/**
+ * 許可オリジンのパターン。`https://<prefix>*<suffix>.<domain>` の形だけを受け付ける。
+ * `*` は 1 つだけ、ホストの先頭ラベルの中に置き、前後に固定の文字列が必要。
+ * `https://*.vercel.app` のような、他人のデプロイにも一致する広いパターンを防ぐため。
+ * 照合は @wpp/runtime の originMatches（`*` はドットをまたがない）。
+ */
+export function parseOriginPattern(value: string, name: string): string {
+  const raw = value.trim();
+  if (!raw.includes('*')) return parseOrigin(raw, name, raw);
+  const fail = (why: string) => {
+    throw new Error(`${name} のパターンが不正です（${why}）: "${raw}"`);
+  };
+  if (raw.indexOf('*') !== raw.lastIndexOf('*')) fail('* は 1 つだけ');
+  const normalized = parseOrigin(raw.replace('*', 'x'), name, raw);
+  if (!normalized.startsWith('https://')) fail('パターンは https:// のみ');
+  const host = raw.replace(/\/$/, '').slice('https://'.length);
+  const [label = '', ...rest] = host.split('.');
+  if (!label.includes('*')) fail('* はホストの先頭ラベルに置く');
+  if (rest.length < 2) fail('* の後ろに 2 つ以上のラベルが必要');
+  const [before = '', after = ''] = label.split('*');
+  if (!before || !after) fail('* の前後に固定の文字列が必要（例: https://web-*-team.vercel.app）');
+  if (!/^[a-z0-9-]+$/.test(before + after)) fail('先頭ラベルは英小文字・数字・ハイフンのみ');
+  return `https://${host}`;
+}
+
+/** カンマ区切りのオリジン一覧。各要素は parseOrigin、`*` を含むものは parseOriginPattern で検証する。 */
 export function parseOrigins(value: string | undefined, name: string, fallback: string): string[] {
   const items = (value?.trim() || fallback)
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
-  return [...new Set(items.map((s) => parseOrigin(s, name, s)))];
+  return [...new Set(items.map((s) => parseOriginPattern(s, name)))];
 }

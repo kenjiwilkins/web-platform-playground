@@ -5,5 +5,7 @@
     "noEmit": true,
     "types": []
   },
-  "include": ["src"]
+  "include": ["src"],
+  // テストは node:test で動かす。DOM 向けのこのパッケージに Node の型を混ぜないため型検査から外す
+  "exclude": ["src/**/*.test.ts"]
 }

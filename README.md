@@ -74,15 +74,18 @@ variants: [basic, position-try] # 省略時はディレクトリ名順
 
 プロジェクトを2つ作る。どちらも Root Directory を指定する。
 
-| プロジェクト | Root Directory | 環境変数                                              |
-| ------------ | -------------- | ----------------------------------------------------- |
-| web          | `apps/web`     | `PUBLIC_SANDBOX_ORIGIN`（sandbox の URL）、`SITE_URL` |
-| sandbox      | `apps/sandbox` | `PARENT_ORIGINS`（web の URL。カンマ区切りで複数可）  |
+| プロジェクト | Root Directory | 環境変数                                                                 |
+| ------------ | -------------- | ------------------------------------------------------------------------ |
+| web          | `apps/web`     | `PUBLIC_SANDBOX_ORIGIN`（sandbox の URL）、`SITE_URL`                    |
+| sandbox      | `apps/sandbox` | `PARENT_ORIGINS`（web の URL。カンマ区切りで複数可。`*` のパターンも可） |
 
 sandbox は web と**別サイト**（別の登録ドメイン、または `*.vercel.app`）に置く。
 同じサイトのサブドメインだと Cookie やストレージの分離が弱くなる。
+
+値の書き方、プレビューの扱い、ビルドを省く条件は [docs/deploy.md](docs/deploy.md)。
 
 ## 運用
 
 - ブランチ戦略: [docs/branching.md](docs/branching.md)
 - Renovate: [docs/renovate.md](docs/renovate.md)
+- デプロイとプレビュー: [docs/deploy.md](docs/deploy.md)
