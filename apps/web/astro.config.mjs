@@ -1,8 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { parseOrigin } from '@wpp/schema';
 
 export default defineConfig({
-  site: process.env.SITE_URL ?? 'http://localhost:4321',
+  site: parseOrigin(process.env.SITE_URL, 'SITE_URL', 'http://localhost:4321'),
   output: 'static',
   trailingSlash: 'always',
   integrations: [

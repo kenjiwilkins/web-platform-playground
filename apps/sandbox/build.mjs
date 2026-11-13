@@ -3,16 +3,17 @@
 // vercel.json と違い、ビルド時に生成したヘッダ設定がそのまま反映される。
 import { build } from 'esbuild';
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
-import { loadPlaygrounds, sandboxHeaders } from '@wpp/schema';
+import { loadPlaygrounds, parseOrigins, sandboxHeaders } from '@wpp/schema';
 
 const out = new URL('./.vercel/output/', import.meta.url);
 const staticDir = new URL('static/', out);
 
 // 親（web）として許可するオリジン。カンマ区切り。
-const parentOrigins = (process.env.PARENT_ORIGINS ?? 'http://localhost:4321')
-  .split(',')
-  .map((s) => s.trim())
-  .filter(Boolean);
+const parentOrigins = parseOrigins(
+  process.env.PARENT_ORIGINS,
+  'PARENT_ORIGINS',
+  'http://localhost:4321',
+);
 
 rmSync(out, { recursive: true, force: true });
 mkdirSync(staticDir, { recursive: true });
