@@ -1,3 +1,8 @@
+/* ツールチップの包含ブロック。スクロールしない外側の要素にする（README のハマりどころ） */
+.frame {
+  position: relative;
+}
+
 .scroller {
   height: 200px;
   overflow: auto;
@@ -18,7 +23,7 @@
 .tooltip {
   position: absolute;
   position-anchor: --a;
-  position-area: bottom;
+  position-area: top;
   position-try-fallbacks: flip-block;
   border: 1px solid;
 }
