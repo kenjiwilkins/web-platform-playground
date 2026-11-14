@@ -1,0 +1,10 @@
+title: animation-timeline
+summary: アニメーションの進行を時間ではなくスクロール位置や要素の可視範囲に結び付ける（スクロール駆動アニメーション）。
+mdn: Web/CSS/animation-timeline
+spec: https://drafts.csswg.org/scroll-animations-1/#animation-timeline
+webFeature: scroll-driven-animations
+bcd: css.properties.animation-timeline
+detect: CSS.supports('animation-timeline', 'scroll()')
+tags: [animation, scroll]
+added: 2026-11-14
+variants: [scroll, view]
