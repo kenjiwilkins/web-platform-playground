@@ -13,8 +13,17 @@ import { readFileSync } from 'node:fs';
 const BUILD = 1;
 const SKIP = 0;
 
-/** turbo が拾わないが、どのプロジェクトのビルド結果も変えうるファイル */
-const ALWAYS = [/^playgrounds\//, /^tsconfig\.base\.json$/, /^\.nvmrc$/, /^pnpm-workspace\.yaml$/];
+/**
+ * turbo が拾わないが、どのプロジェクトのビルド結果も変えうるファイル。
+ * このスクリプト自身も含める（判定を変えたら、両方のプロジェクトを一度ビルドし直す）。
+ */
+const ALWAYS = [
+  /^playgrounds\//,
+  /^tsconfig\.base\.json$/,
+  /^\.nvmrc$/,
+  /^pnpm-workspace\.yaml$/,
+  /^tools\/vercel-ignore\.mjs$/,
+];
 
 const pkg = process.argv[2];
 const base = process.env.VERCEL_GIT_PREVIOUS_SHA;
@@ -42,8 +51,13 @@ try {
   exit(BUILD, `前回の SHA ${base.slice(0, 7)} が clone の履歴にない`);
 }
 
+// 同じコミットのデプロイは、ダッシュボードの Redeploy など人が明示的に起こしたもの。
+// 環境変数だけを変えたときに必要なので、差分がなくてもビルドする。
+if (git('rev-parse', `${base}^{commit}`) === git('rev-parse', 'HEAD')) {
+  exit(BUILD, '前回と同じコミットの再デプロイ');
+}
+
 const changed = git('diff', '--name-only', base, 'HEAD').split('\n').filter(Boolean);
-if (changed.length === 0) exit(SKIP, '変更なし');
 
 const hit = changed.find((f) => ALWAYS.some((re) => re.test(f)));
 if (hit) exit(BUILD, `${hit} が変わった`);

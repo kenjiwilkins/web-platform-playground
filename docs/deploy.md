@@ -27,7 +27,7 @@ PARENT_ORIGINS=https://web-amber-theta-23.vercel.app,https://webplatform-playgro
 ```
 
 値はビルド時に検証される（`packages/schema/src/origin.ts`）。スキームの付け忘れやパス付きの値はビルドが止まる。
-変えたら再デプロイが必要（どれもビルド時に埋め込まれる）。
+変えたら再デプロイが必要（どれもビルド時に埋め込まれる）。ダッシュボードの Redeploy でよい（同じコミットの再デプロイは必ずビルドする）。
 
 ## プレビューのルール
 
@@ -37,9 +37,11 @@ PARENT_ORIGINS=https://web-amber-theta-23.vercel.app,https://webplatform-playgro
    前回のデプロイ（`VERCEL_GIT_PREVIOUS_SHA`）からの差分で決める。本番デプロイにも効く。
    - ビルドする: そのパッケージか依存パッケージのソース・lockfile 上の依存の変化（turbo で判定）、
      `playgrounds/`、`turbo.json`、`tsconfig.base.json`、`.nvmrc`、`pnpm-workspace.yaml`、
-     ルートの `package.json` の devDependencies 以外。
+     ルートの `package.json` の devDependencies 以外、`tools/vercel-ignore.mjs` 自身。
    - ビルドしない: `docs/`、`.github/`、`tests/`、`tools/`、`renovate.json5`、ルートの devDependencies だけの変更など。
+   - 前回と同じコミットの再デプロイ（Redeploy）は必ずビルドする。環境変数だけを変えたときのため。
    - 判定できないとき（ブランチの初回デプロイ、前回の SHA が clone にない）はビルドする。
+   - 省いたデプロイは、Vercel のダッシュボードでは「Canceled」と表示される。
    - turbo-ignore をそのまま使わないのは、`playgrounds/` などパッケージの外の変更を拾えないため。
 3. **web のプレビューは本番の sandbox を使う。** sandbox のプレビューは使わない。
    - プレビューは Deployment Protection（Vercel へのログイン）で守られる。別サイトの iframe には
