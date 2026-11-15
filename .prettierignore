@@ -7,3 +7,5 @@ playgrounds/**/*.html
 playgrounds/**/*.css
 playgrounds/**/*.js
 .vercel/
+# 生成物。`pnpm coverage` が書き出す
+docs/coverage.md

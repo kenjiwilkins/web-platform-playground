@@ -15,7 +15,8 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "new": "tsx tools/scaffold/index.ts",
-    "feature-watch": "tsx tools/feature-watch/index.ts"
+    "feature-watch": "tsx tools/feature-watch/index.ts",
+    "coverage": "tsx tools/coverage-report/index.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

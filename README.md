@@ -17,6 +17,7 @@ playgrounds/  コンテンツ本体。URL とディレクトリが 1:1 で対応
 tools/
   scaffold/       pnpm new で Playground の雛形を作る
   feature-watch/  web-features の差分から新機能を検知する
+  coverage-report/ Playground の追加状況を集計して docs/coverage.md を作る
 tests/e2e/    Playwright。全 Playground を全ブラウザで実行
 ```
 
@@ -86,6 +87,7 @@ sandbox は web と**別サイト**（別の登録ドメイン、または `*.ve
 
 ## 運用
 
+- 追加状況: [docs/coverage.md](docs/coverage.md)（`pnpm coverage` で更新。Claude Code では `/add-playground` が候補選びから更新まで行う）
 - ブランチ戦略: [docs/branching.md](docs/branching.md)
 - Renovate: [docs/renovate.md](docs/renovate.md)
 - デプロイとプレビュー: [docs/deploy.md](docs/deploy.md)
