@@ -1,0 +1,10 @@
+title: Asynchronously iterable streams
+summary: ReadableStream を `for await...of` で読む。ループを抜けるとストリームが cancel される。
+mdn: Web/API/ReadableStream/values
+spec: https://streams.spec.whatwg.org/#rs-asynciterator
+webFeature: async-iterable-streams
+bcd: api.ReadableStream.@@asyncIterator
+detect: typeof ReadableStream === 'function' && typeof ReadableStream.prototype[Symbol.asyncIterator] === 'function'
+tags: [streams, async-iteration]
+added: 2026-11-15
+variants: [basic, edge-cases]
