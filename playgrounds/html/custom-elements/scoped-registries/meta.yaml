@@ -1,0 +1,9 @@
+title: Scoped custom element registries
+summary: カスタム要素の登録先（レジストリ）をシャドウルートごとに分け、同じタグ名を別の実装で共存させる。
+mdn: Web/API/CustomElementRegistry/CustomElementRegistry
+spec: https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-api
+webFeature: scoped-custom-element-registries
+bcd: api.CustomElementRegistry.CustomElementRegistry
+detect: typeof CustomElementRegistry === 'function' && 'customElementRegistry' in ShadowRoot.prototype
+tags: [custom-elements, shadow-dom]
+added: 2026-11-15
