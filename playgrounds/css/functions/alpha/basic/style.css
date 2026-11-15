@@ -1,0 +1,9 @@
+body { font-family: sans-serif; background: repeating-conic-gradient(#ddd 0 25%, #fff 0 50%) 0 0 / 20px 20px; }
+.row { display: flex; gap: 8px; margin-bottom: 8px; }
+.swatch { --c: rebeccapurple; flex: 1; padding: 24px 8px; color: #000; text-align: center; background: var(--c); }
+.base { color: #fff; }
+.half { --c: rgb(102 51 153 / 0.8); }
+.a50 { background: alpha(from var(--c) / 0.5); }
+.a20 { background: alpha(from var(--c) / 0.2); }
+.calc { background: alpha(from var(--c) / calc(alpha * 0.5)); }
+.calc-half { --c: rgb(102 51 153 / 0.8); background: alpha(from var(--c) / calc(alpha * 0.5)); }

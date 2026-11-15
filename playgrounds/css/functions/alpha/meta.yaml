@@ -1,0 +1,9 @@
+title: alpha()
+summary: 元の色の色味はそのまま、不透明度だけを差し替えた色を作る（CSS Color 5 の相対色）。
+mdn: Web/CSS/Reference/Values/color_value/alpha
+spec: https://drafts.csswg.org/css-color-5/#relative-alpha
+webFeature: alpha
+bcd: css.types.color.alpha
+detect: CSS.supports('color', 'alpha(from red / 0.5)')
+tags: [color, relative-color]
+added: 2026-11-15
