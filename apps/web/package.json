@@ -23,6 +23,7 @@
     "@wpp/tokens": "workspace:*",
     "astro": "7.4.8",
     "codemirror": "6.0.2",
+    "marked": "18.2.0",
     "web-features": "3.46.0"
   },
   "devDependencies": {

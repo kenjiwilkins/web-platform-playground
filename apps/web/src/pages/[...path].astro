@@ -1,10 +1,22 @@
 ---
+import { Marked } from 'marked';
 import Base from '../layouts/Base.astro';
 import BaselineBadge from '../components/BaselineBadge.astro';
 import Workspace from '../components/Workspace.astro';
 import { baselineOf, categoryLabels, getPlaygrounds, mdnUrl, type Playground } from '../lib/data';
 
 // /css/properties/anchor-name/ と /css/properties/anchor-name/<variant>/ を生成する
+// README はリポジトリ内の信頼できる Markdown なので、変換結果をそのまま出す。
+// ページ側に「メモ」の h2 があるので、README の見出しは 1 段下げる。
+const readme = new Marked({
+  renderer: {
+    heading({ tokens, depth }) {
+      const level = Math.min(depth + 1, 6);
+      return `<h${level}>${this.parser.parseInline(tokens)}</h${level}>\n`;
+    },
+  },
+});
+
 export function getStaticPaths() {
   return getPlaygrounds().flatMap((pg) =>
     pg.variants.map((variant, i) => ({
@@ -22,6 +34,7 @@ const { pg, variantIndex } = Astro.props;
 const variant = pg.variants[variantIndex]!;
 const baseline = baselineOf(pg);
 const { meta } = pg;
+const readmeHtml = pg.readme ? readme.parse(pg.readme, { async: false }) : '';
 ---
 
 <Base
@@ -87,7 +100,7 @@ const { meta } = pg;
     {pg.readme && (
       <section class="notes">
         <h2>メモ</h2>
-        <pre class="readme">{pg.readme}</pre>
+        <div class="readme" set:html={readmeHtml} />
       </section>
     )}
   </div>
@@ -124,9 +137,19 @@ const { meta } = pg;
     color: var(--text-muted);
   }
   .readme {
-    white-space: pre-wrap;
-    font-family: var(--font-sans);
     font-size: var(--body-lg-size);
     line-height: var(--body-lg-line);
+  }
+  .readme :global(h3) {
+    margin: var(--space-5) 0 var(--space-2);
+  }
+  .readme :global(h3:first-child) {
+    margin-top: 0;
+  }
+  .readme :global(ul) {
+    padding-inline-start: var(--space-5);
+  }
+  .readme :global(li + li) {
+    margin-top: var(--space-1);
   }
 </style>
