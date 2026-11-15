@@ -1,0 +1,24 @@
+@keyframes grow {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: Highlight;
+  transform-origin: left;
+  animation: grow linear both;
+  animation-timeline: scroll(root block);
+}
+
+section {
+  height: 60vh;
+  margin-block: 1rem;
+  border: 1px dashed;
+}
