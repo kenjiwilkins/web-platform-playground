@@ -1,0 +1,18 @@
+#box {
+  width: 80px;
+  padding: 8px;
+  background: lightskyblue;
+  /* 同じ @keyframes 名 "slide" を、長さと遅延を変えて 2 回使う + 別名の "grow" */
+  animation:
+    slide 300ms ease-out forwards,
+    slide 800ms 100ms ease-in forwards,
+    grow 500ms forwards;
+}
+@keyframes slide {
+  from { translate: 0 0; }
+  to { translate: 120px 0; }
+}
+@keyframes grow {
+  from { scale: 1; }
+  to { scale: 1.3; }
+}

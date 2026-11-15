@@ -1,0 +1,16 @@
+#box {
+  width: 80px;
+  padding: 8px;
+  background: lightskyblue;
+}
+#box.run {
+  animation: slide 300ms ease-out forwards;
+}
+#box.fade {
+  opacity: 0.2;
+  transition: opacity 200ms;
+}
+@keyframes slide {
+  from { margin-left: 0; }
+  to { margin-left: 120px; }
+}

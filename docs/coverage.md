@@ -4,7 +4,7 @@
 
 - 更新日: 2026-11-15
 - 基準: web-features 3.46.0（廃止予定の機能と、HTML/CSS/JS/Web API 以外は集計から除く）
-- Playground: 6 件（web-features に紐づく機能: 6 件）
+- Playground: 7 件（web-features に紐づく機能: 7 件）
 
 ## カテゴリ別
 
@@ -13,13 +13,13 @@
 | HTML | 3 | 215 | 1% |
 | CSS | 2 | 432 | 0% |
 | JavaScript | 0 | 113 | 0% |
-| Web API | 1 | 340 | 0% |
+| Web API | 2 | 340 | 1% |
 
 ## Baseline 別
 
 | Baseline | 追加済み | 全機能 | 割合 |
 | --- | ---: | ---: | ---: |
-| Newly | 4 | 115 | 3% |
+| Newly | 5 | 115 | 4% |
 | Limited | 1 | 360 | 0% |
 | Widely | 1 | 625 | 0% |
 
@@ -27,6 +27,7 @@
 
 | パス | 機能 (web-features) | Baseline | 追加日 |
 | --- | --- | --- | --- |
+| `api/animations/animations-css-animation-accessors` | `animations-css-animation-accessors` | Newly | 2026-11-15 |
 | `api/streams/async-iterable-streams` | `async-iterable-streams` | Newly | 2026-11-15 |
 | `css/functions/alpha` | `alpha` | Newly | 2026-11-15 |
 | `css/properties/anchor-name` | `anchor-positioning` | Limited | 2026-11-13 |
@@ -41,7 +42,6 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | 機能 (web-features) | 名前 | カテゴリ | Baseline | Newly 入り |
 | --- | --- | --- | --- | --- |
 | `ext-texture-norm16` | EXT_texture_norm16 WebGL extension | Web API | Newly | 2026-10-27 |
-| `animations-css-animation-accessors` | Animation accessors | Web API | Newly | 2026-09-14 |
 | `arianotify` | ariaNotify() | Web API | Newly | 2026-09-14 |
 | `light-dark-image` | light-dark() image values | CSS | Newly | 2026-09-14 |
 | `overflow-anchor` | overflow-anchor | CSS | Newly | 2026-09-14 |
@@ -60,5 +60,6 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `text-decoration-skip-ink-all` | text-decoration-skip-ink: all | CSS | Newly | 2026-05-07 |
 | `js-modules-shared-workers` | JavaScript modules in shared workers | Web API | Newly | 2026-05-05 |
 | `shared-workers` | Shared worker | Web API | Newly | 2026-05-05 |
+| `contrast-color` | contrast-color() | CSS | Newly | 2026-04-10 |
 
-未追加は他に 1074 件。
+未追加は他に 1073 件。

@@ -1,0 +1,10 @@
+title: AnimationEvent.animation / TransitionEvent.animation
+summary: animationstart / transitionend などのイベントから、発火元の Animation オブジェクトを `event.animation` で直接取得する。
+mdn: Web/API/AnimationEvent/animation
+spec: https://drafts.csswg.org/css-animations-2/#dom-animationevent-animation
+webFeature: animations-css-animation-accessors
+bcd: api.AnimationEvent.animation
+detect: typeof AnimationEvent === 'function' && 'animation' in AnimationEvent.prototype
+tags: [animation, events, web-animations]
+added: 2026-11-15
+variants: [basic, multiple]
