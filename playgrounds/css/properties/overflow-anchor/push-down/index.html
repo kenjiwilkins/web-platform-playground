@@ -1,0 +1,24 @@
+<h1>タイムライン: 新着を見せたい</h1>
+<p id="support" class="legend"></p>
+<div class="scenario">
+  <b>シナリオ:</b> SNS のタイムラインを、先頭からほんの少しだけスクロールした状態で見ている。
+  「新着を取得」で先頭に 3 件（青い NEW）が足される。<br>
+  新着はすぐ目に入ってほしい。ところが <code>auto</code> は「読んでいた位置」を優先するので、新着が画面の上へ隠れる。
+</div>
+<div class="actions">
+  <button class="primary" id="go">新着を取得</button>
+  <button id="run">リセット</button>
+</div>
+<div class="cols">
+  <div class="col">
+    <div class="col-head"><span class="badge auto">auto</span> ブラウザの補正あり</div>
+    <div class="scroller" id="auto"></div>
+    <div class="result" id="r-auto"></div>
+  </div>
+  <div class="col">
+    <div class="col-head"><span class="badge none">none</span> ブラウザの補正なし</div>
+    <div class="scroller none" id="none"></div>
+    <div class="result" id="r-none"></div>
+  </div>
+</div>
+<pre id="log"></pre>

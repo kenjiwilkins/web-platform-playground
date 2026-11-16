@@ -1,0 +1,10 @@
+title: overflow-anchor
+summary: スクロール位置より上に要素が挿入されても、見ている内容がずれないようにする（scroll anchoring）。none でそれを切る。
+mdn: Web/CSS/Reference/Properties/overflow-anchor
+spec: https://drafts.csswg.org/css-scroll-anchoring-1/#exclusion-api
+webFeature: overflow-anchor
+bcd: css.properties.overflow-anchor
+detect: CSS.supports('overflow-anchor', 'none')
+tags: [scroll, layout]
+added: 2026-11-16
+variants: [basic, manual, push-down, ad, animation]

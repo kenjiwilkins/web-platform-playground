@@ -1,0 +1,26 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; }
+.scenario { background: #f1f5f9; border-left: 4px solid #3b82f6; padding: 8px 12px; margin: 8px 0; font-size: 13px; line-height: 1.5; }
+.actions { display: flex; gap: 8px; margin: 8px 0; }
+.actions button { padding: 6px 12px; border: 1px solid #94a3b8; border-radius: 6px; background: white; cursor: pointer; }
+.actions button.primary { background: #3b82f6; color: white; border-color: #3b82f6; }
+.cols { display: flex; gap: 12px; flex-wrap: wrap; }
+.col { flex: 1; min-width: 0; }
+.col-head { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.badge { padding: 1px 8px; border-radius: 999px; font-size: 11px; color: white; }
+.badge.auto { background: #16a34a; }
+.badge.none { background: #ea580c; }
+.scroller { overflow-y: scroll; border: 1px solid #cbd5e1; border-radius: 8px; background: white; }
+.scroller.none { overflow-anchor: none; }
+.result { margin-top: 6px; font-size: 12px; line-height: 1.5; min-height: 4.5em; }
+.ok { color: #15803d; font-weight: 600; }
+.ng { color: #b91c1c; font-weight: 600; }
+.legend { font-size: 12px; color: #475569; }
+pre#log { font-size: 11px; color: #64748b; }
+.scroller { height: 280px; padding: 8px 10px; position: relative; }
+.article h3 { margin: 0 0 6px; font-size: 14px; }
+.para { height: 60px; font-size: 12px; line-height: 1.5; color: #334155; margin: 0 0 6px; overflow: hidden; }
+.para.reading { background: #fef9c3; border-left: 3px solid #eab308; padding-left: 6px; }
+.para.reading::before { content: 'いま読んでいる段落'; display: block; font-size: 10px; font-weight: 600; color: #a16207; }
+.ad { height: 40px; margin: 0 0 6px; background: repeating-linear-gradient(45deg, #e2e8f0, #e2e8f0 8px, #f1f5f9 8px, #f1f5f9 16px); border: 1px dashed #94a3b8; text-align: center; font-size: 11px; color: #64748b; overflow: hidden; }
+.ad.none { overflow-anchor: none; }
