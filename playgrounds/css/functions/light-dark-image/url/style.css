@@ -1,0 +1,16 @@
+.row { display: flex; gap: 16px; }
+figure { margin: 8px 0; }
+.box {
+  width: 160px;
+  height: 40px;
+  border: 1px solid gray;
+  background-repeat: no-repeat;
+  background-image: light-dark(
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='40'%3E%3Crect width='160' height='40' fill='%23ffe066'/%3E%3Ctext x='8' y='26' font-size='18'%3ELIGHT image%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='40'%3E%3Crect width='160' height='40' fill='%23222'/%3E%3Ctext x='8' y='26' font-size='18' fill='white'%3EDARK image%3C/text%3E%3C/svg%3E")
+  );
+}
+.light { color-scheme: light; }
+.dark { color-scheme: dark; }
+#live { color-scheme: light; }
+#live.is-dark { color-scheme: dark; }
