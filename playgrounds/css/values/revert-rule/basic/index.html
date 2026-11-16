@@ -1,0 +1,20 @@
+<h1>ボタンの背景を、指定があるときだけ上書きする</h1>
+<p id="support"></p>
+
+<h2>var(--btn-bg, revert-rule)</h2>
+<div class="row revert-rule">
+  <button class="btn">default</button>
+  <button class="btn primary">primary</button>
+  <button class="btn danger">danger</button>
+  <button class="btn primary" style="--btn-bg: purple">primary + --btn-bg</button>
+</div>
+
+<h2>var(--btn-bg, initial)</h2>
+<div class="row with-initial">
+  <button class="btn">default</button>
+  <button class="btn primary">primary</button>
+  <button class="btn danger">danger</button>
+  <button class="btn primary" style="--btn-bg: purple">primary + --btn-bg</button>
+</div>
+
+<pre id="log"></pre>

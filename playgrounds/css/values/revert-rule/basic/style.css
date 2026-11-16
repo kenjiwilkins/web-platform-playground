@@ -1,0 +1,24 @@
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px;
+  /* 背景が消えたボタンも、白い文字が読めるように暗い下地を敷く */
+  background: #222;
+}
+.btn {
+  padding: 8px 12px;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+}
+
+/* コンポーネント側の見た目（種類ごとの色） */
+.btn { background: gray; }
+.btn.primary { background: royalblue; }
+.btn.danger { background: crimson; }
+
+/* 利用側のカスタマイズ口: --btn-bg があるときだけ上書きしたい。
+   specificity を .primary / .danger と揃え、後ろに書いて勝たせる。 */
+.revert-rule .btn.btn { background: var(--btn-bg, revert-rule); }
+.with-initial .btn.btn { background: var(--btn-bg, initial); }

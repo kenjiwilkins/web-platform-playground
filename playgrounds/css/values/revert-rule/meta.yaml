@@ -1,0 +1,10 @@
+title: revert-rule
+summary: revert-rule で、今の宣言を「この規則が無かったことにして」ひとつ前のカスケード値へ戻す（revert や unset とは戻り先が違う）。
+mdn: Web/CSS/Reference/Values/revert-rule
+spec: https://drafts.csswg.org/css-cascade-5/#revert-rule-keyword
+webFeature: revert-rule
+bcd: css.types.global_keywords.revert-rule
+detect: CSS.supports('background', 'revert-rule')
+tags: [cascade, global-keywords]
+added: 2026-11-16
+variants: [basic, cascade]
