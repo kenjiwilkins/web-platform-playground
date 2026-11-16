@@ -1,12 +1,22 @@
 ---
 name: add-playground
-description: 最新の Web 標準（web-features）を確認し、まだ Playground になっていない HTML / CSS / JavaScript / Web API の機能をひとつ選んで追加し、docs/coverage.md（追加状況）を更新する。「新しい Playground を足して」「次に何を追加する？」「追加状況を更新して」と言われたときに使う。
+description: 最新の Web 標準（web-features）を確認し、まだ Playground になっていない HTML / CSS / JavaScript / Web API の機能をひとつ選んで追加し、docs/coverage.md（追加状況）を更新する。「新しい Playground を足して」「次に何を追加する？」「追加状況を更新して」と言われたときに使う。`--basic` を付けると、最新の標準ではなく、h1 のような古くから使える基本機能（廃止予定でないもの）を追加する。
 ---
 
 # add-playground
 
 Web 標準の新しい機能を **1 回につき 1 つ** Playground として追加し、追加状況のドキュメントを更新する。
 作業のルールは `AGENTS.md` と `docs/branching.md` が正。ここでは手順だけを書く。
+
+## オプション
+
+| 引数      | 追加する機能                                                                                                                             |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| （なし）  | 最新の Web 標準。Baseline Newly（新しい順）→ Limited → Widely の順に選ぶ                                                                 |
+| `--basic` | 古くから使える基本機能。`h1` などの HTML 要素、基本の CSS、JS、Web API。**Baseline Widely だけ**を、古い順に選ぶ。廃止予定のものは対象外 |
+
+`--basic` が付いたときの手順の違いは、各手順の「`--basic` のとき」に書く。書いていない手順は同じ。
+（Playground のバリアント名の `basic` とは無関係。）
 
 ## 手順
 
@@ -18,6 +28,16 @@ pnpm coverage --candidates 15
 
 web-features のデータ（`node_modules/web-features`）と `playgrounds/**/meta.yaml` の `webFeature` を突き合わせ、
 未追加の機能を **Baseline Newly（新しい順）→ Limited → Widely** の順で JSON 出力する。
+
+**`--basic` のとき**は、代わりにこちらを実行する。
+
+```sh
+pnpm coverage --basic --candidates 15
+```
+
+未追加の機能のうち **Baseline Widely だけ**を、使えるようになった日が古い順（同じ日は id 順）に JSON 出力する。
+廃止予定（web-features の `discouraged`）の機能は、ツールが除外している。
+`docs/coverage.md` は書き換わらない。`--basic` のときは、次の「最新かの確認」は省略してよい（古い機能が対象のため）。
 
 「最新」を確かめるため、入っている web-features が最新かも見る。
 
@@ -43,6 +63,17 @@ npm view web-features version   # node_modules/web-features/package.json の ver
 
 条件に合わない候補を飛ばしたら、**なぜ飛ばしたかを報告に一行書く**。
 迷ったらユーザーに候補を 2〜3 個示して選んでもらう。
+
+**`--basic` のとき**は、上の 4 条件に加えて次を見る。
+
+- **廃止予定でない**: ツールの除外は web-features の `discouraged` だけが根拠。
+  選んだ機能の MDN のページに「非推奨（Deprecated）」と出ていないか、`bcd` のキーの `status.deprecated` が `true` でないかも確認する。
+  該当したら飛ばして、理由を報告に書く。
+- **基本として意味がある**: 初学者が最初に触る機能（見出し、リンク、リスト、基本のボックスモデルなど）を優先する。
+  `accesskey` のように挙動が見えにくいものや、他の機能の一部でしかないものは飛ばしてよい。
+- **古い機能でも「動かして分かること」を探す**: 「既定のスタイルがどうなっているか」「入れ子や省略したときにどうなるか」
+  「未対応のときの代替」など、README に書く発見があるかを見る。見つからないなら飛ばす。
+- 候補が alphabetical に並ぶだけなので、直近に追加した Playground と同じカテゴリが続いていたら、別のカテゴリの候補を選んでよい。
 
 ### 3. 作る
 
@@ -97,6 +128,8 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build
 ## 報告に含めること
 
 - 選んだ機能と、その理由（Baseline の状態・Newly 入りの日付）。飛ばした候補があればその理由。
+  `--basic` のときは、Newly 入りの日付ではなく「Widely で、いつから使えるか（`since`）」と、基本として選んだ理由を書く。
+  廃止予定かどうかを確認した結果（MDN / BCD）も一行添える。
 - 追加したパスと、動作確認でやったこと・できなかったこと。
 - `docs/coverage.md` の更新後の数字（追加済み / 全機能）。
 - web-features の更新が来ている場合はその旨。
@@ -104,5 +137,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build
 ## 補足
 
 - `pnpm` が PATH に無い環境では `node_modules/.bin/tsx tools/coverage-report/index.ts` を直接実行できる。
+- `--basic` の候補の出し方（Widely だけ・古い順）も `tools/coverage-report/index.ts` が正。
+  `docs/coverage.md` の「次の候補」は最新の標準を優先する並びのままで、`--basic` の候補は載らない。
 - 集計の定義（カテゴリの決め方、廃止予定の除外、並び順）は `tools/coverage-report/index.ts` が正。
   変えたくなったらスキルではなくそちらを直す。
