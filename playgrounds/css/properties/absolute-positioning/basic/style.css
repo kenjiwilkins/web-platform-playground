@@ -1,0 +1,13 @@
+.pair { display: flex; gap: 12px; }
+.case { flex: 1; }
+.label { font-size: 12px; color: #475569; margin-bottom: 4px; }
+.host { height: 70px; border: 2px solid #64748b; padding: 4px; margin: 0 0 12px; }
+.host.rel { position: relative; }
+.abs { position: absolute; top: 10px; left: 10px; background: gold; padding: 2px 6px; }
+.host.flow { height: auto; background: #f1f5f9; }
+.host.flow p { margin: 0; padding: 6px; border: 1px dashed #94a3b8; background: white; }
+.host.flow p.abs2 { position: absolute; background: gold; width: 120px; }
+.host.order { position: relative; height: 90px; }
+.host.order button { position: absolute; left: 10px; }
+.host.order .a { top: 50px; }
+.host.order .b { top: 10px; }

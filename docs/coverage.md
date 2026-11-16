@@ -4,14 +4,14 @@
 
 - 更新日: 2026-11-16
 - 基準: web-features 3.46.0（廃止予定の機能と、HTML/CSS/JS/Web API 以外は集計から除く）
-- Playground: 11 件（web-features に紐づく機能: 11 件）
+- Playground: 12 件（web-features に紐づく機能: 12 件）
 
 ## カテゴリ別
 
 | カテゴリ | 追加済み | 全機能 | 割合 |
 | --- | ---: | ---: | ---: |
 | HTML | 4 | 215 | 2% |
-| CSS | 5 | 432 | 1% |
+| CSS | 6 | 432 | 1% |
 | JavaScript | 0 | 113 | 0% |
 | Web API | 2 | 340 | 1% |
 
@@ -21,7 +21,7 @@
 | --- | ---: | ---: | ---: |
 | Newly | 8 | 115 | 7% |
 | Limited | 1 | 360 | 0% |
-| Widely | 2 | 625 | 0% |
+| Widely | 3 | 625 | 0% |
 
 ## 追加済みの Playground
 
@@ -31,6 +31,7 @@
 | `api/streams/async-iterable-streams` | `async-iterable-streams` | Newly | 2026-11-15 |
 | `css/functions/alpha` | `alpha` | Newly | 2026-11-15 |
 | `css/functions/light-dark-image` | `light-dark-image` | Newly | 2026-11-16 |
+| `css/properties/absolute-positioning` | `absolute-positioning` | Widely | 2026-11-16 |
 | `css/properties/anchor-name` | `anchor-positioning` | Limited | 2026-11-13 |
 | `css/properties/animation-timeline` | `scroll-driven-animations` | Newly | 2026-11-14 |
 | `css/properties/overflow-anchor` | `overflow-anchor` | Newly | 2026-11-16 |
@@ -66,4 +67,4 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `baseline-shift` | baseline-shift | CSS | Newly | 2026-03-24 |
 | `font-family-math` | Math font family | CSS | Newly | 2026-03-24 |
 
-未追加は他に 1069 件。
+未追加は他に 1068 件。

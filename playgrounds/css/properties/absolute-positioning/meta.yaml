@@ -1,0 +1,9 @@
+title: 'position: absolute'
+summary: 要素を通常のフローから外し、包含ブロック（最も近い position 指定のある祖先）を基準に top / left などで配置する。
+mdn: Web/CSS/Reference/Properties/position
+spec: https://drafts.csswg.org/css-position-3/#abspos-insets
+webFeature: absolute-positioning
+bcd: css.properties.position.absolute
+detect: CSS.supports('position', 'absolute')
+tags: [layout, positioning, containing-block]
+added: 2026-11-16

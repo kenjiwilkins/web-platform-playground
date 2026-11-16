@@ -1,0 +1,40 @@
+<h1>position: absolute はどこを基準にするか</h1>
+<p id="support"></p>
+
+<h2>1. 包含ブロック</h2>
+<div class="pair">
+  <div class="case">
+    <div class="label">祖先に position: relative あり</div>
+    <div class="host rel" id="rel"><span class="abs" id="abs-rel">abs</span></div>
+  </div>
+  <div class="case">
+    <div class="label">position 指定の祖先なし</div>
+    <div class="host" id="none"><span class="abs" id="abs-none">abs</span></div>
+  </div>
+</div>
+
+<h2>2. フローから外れる</h2>
+<div class="pair">
+  <div class="case">
+    <div class="label">absolute の子なし</div>
+    <div class="host flow" id="flow-without"><p>通常の段落 1</p><p>通常の段落 2</p></div>
+  </div>
+  <div class="case">
+    <div class="label">1 つ目を absolute に</div>
+    <div class="host flow" id="flow-with"><p class="abs2">通常の段落 1</p><p>通常の段落 2</p></div>
+  </div>
+</div>
+
+<h2>3. transform した祖先も基準になる</h2>
+<div class="case">
+  <div class="host" id="tf" style="transform: translate(0)"><span class="abs" id="abs-tf">abs</span></div>
+</div>
+
+<h2>4. 見た目の順と、DOM の順</h2>
+<p>DOM 順は A → B。B を上、A を下に absolute で並べ替えた。</p>
+<div class="host order" id="order">
+  <button id="btn-a" class="a">A（DOM で先）</button>
+  <button id="btn-b" class="b">B（DOM で後）</button>
+</div>
+
+<pre id="log"></pre>
