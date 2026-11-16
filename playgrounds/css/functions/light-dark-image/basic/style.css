@@ -1,0 +1,15 @@
+.row { display: flex; gap: 8px; }
+.box {
+  flex: 1;
+  padding: 24px 8px;
+  color: white;
+  text-shadow: 0 0 3px black;
+  background-image: light-dark(
+    linear-gradient(to right, gold, orangered),
+    linear-gradient(to right, midnightblue, purple)
+  );
+}
+.light { color-scheme: light; }
+.dark { color-scheme: dark; }
+#live { color-scheme: light; margin-top: 8px; }
+#live.is-dark { color-scheme: dark; }
