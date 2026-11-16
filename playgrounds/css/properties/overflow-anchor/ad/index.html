@@ -1,0 +1,30 @@
+<h1>記事ページ: 広告が遅れて大きくなる</h1>
+<p id="support" class="legend"></p>
+<div class="scenario">
+  <b>シナリオ:</b> 記事を読んでいる。画面の上の方に広告枠があり、その下の黄色い段落を読んでいる。
+  「広告を読み込む」で、遅れて読み込まれた広告が 40px → 160px に伸びる。<br>
+  広告がアンカーに選ばれると、広告の位置が守られて<b>本文が押し下げられる</b>。
+  広告の枠だけ <code>overflow-anchor: none</code> にすると、読んでいる段落のほうが守られる。
+</div>
+<div class="actions">
+  <button class="primary" id="go">広告を読み込む</button>
+  <button id="run">リセット</button>
+</div>
+<div class="cols">
+  <div class="col">
+    <div class="col-head"><span class="badge auto">auto</span> 何もしない</div>
+    <div class="scroller article" id="auto"></div>
+    <div class="result" id="r-auto"></div>
+  </div>
+  <div class="col">
+    <div class="col-head"><span class="badge none">none</span> 記事全体を none</div>
+    <div class="scroller article none" id="none"></div>
+    <div class="result" id="r-none"></div>
+  </div>
+  <div class="col">
+    <div class="col-head"><span class="badge none">none</span> 広告だけ none</div>
+    <div class="scroller article" id="ad-none"></div>
+    <div class="result" id="r-ad-none"></div>
+  </div>
+</div>
+<pre id="log"></pre>

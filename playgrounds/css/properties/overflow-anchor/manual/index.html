@@ -1,0 +1,25 @@
+<h1>チャット: 過去のメッセージを読み込む</h1>
+<p id="support" class="legend"></p>
+<div class="scenario">
+  <b>シナリオ:</b> チャットを少し上へスクロールして、過去のやり取りを読んでいる。
+  「過去のメッセージを読み込む」で先頭に 3 件（黄色）が足される。<br>
+  実装側は「足した高さだけ <code>scrollTop</code> を増やす」<b>自前の補正</b>を入れている。
+  ブラウザの補正（<code>auto</code>）と二重にかかると、読んでいた位置が飛ぶ。
+</div>
+<div class="actions">
+  <button class="primary" id="go">過去のメッセージを読み込む</button>
+  <button id="run">リセット</button>
+</div>
+<div class="cols">
+  <div class="col">
+    <div class="col-head"><span class="badge auto">auto</span> ブラウザの補正あり</div>
+    <div class="scroller" id="auto"></div>
+    <div class="result" id="r-auto"></div>
+  </div>
+  <div class="col">
+    <div class="col-head"><span class="badge none">none</span> ブラウザの補正なし</div>
+    <div class="scroller none" id="none"></div>
+    <div class="result" id="r-none"></div>
+  </div>
+</div>
+<pre id="log"></pre>

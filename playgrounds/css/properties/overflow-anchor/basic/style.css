@@ -1,0 +1,11 @@
+.row { display: flex; gap: 12px; }
+figure { margin: 8px 0; font-size: 12px; }
+.box {
+  width: 150px;
+  height: 120px;
+  overflow-y: scroll;
+  border: 1px solid gray;
+}
+.box.none { overflow-anchor: none; }
+.item { height: 30px; padding: 4px; box-sizing: border-box; border-bottom: 1px solid #ccc; }
+.item.target { background: gold; }

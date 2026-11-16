@@ -1,0 +1,25 @@
+<h1>記事ページ: お知らせバナーが開く</h1>
+<p id="support" class="legend"></p>
+<div class="scenario">
+  <b>シナリオ:</b> 記事を途中まで読んでいる。ページの先頭（画面の上）にある「お知らせバナー」が、
+  400ms かけて 0 → 150px に開く。<br>
+  <code>auto</code> は開いている間ずっと <code>scrollTop</code> を補正して、読んでいる段落を守る（<code>scroll</code> イベントが連続する）。
+  <code>none</code> は補正しないので、段落が押し下げられる。
+</div>
+<div class="actions">
+  <button class="primary" id="go">バナーを開く</button>
+  <button id="run">リセット</button>
+</div>
+<div class="cols">
+  <div class="col">
+    <div class="col-head"><span class="badge auto">auto</span> ブラウザの補正あり</div>
+    <div class="scroller" id="auto"></div>
+    <div class="result" id="r-auto"></div>
+  </div>
+  <div class="col">
+    <div class="col-head"><span class="badge none">none</span> ブラウザの補正なし</div>
+    <div class="scroller none" id="none"></div>
+    <div class="result" id="r-none"></div>
+  </div>
+</div>
+<pre id="log"></pre>
