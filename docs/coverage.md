@@ -4,14 +4,14 @@
 
 - 更新日: 2026-11-16
 - 基準: web-features 3.46.0（廃止予定の機能と、HTML/CSS/JS/Web API 以外は集計から除く）
-- Playground: 8 件（web-features に紐づく機能: 8 件）
+- Playground: 9 件（web-features に紐づく機能: 9 件）
 
 ## カテゴリ別
 
 | カテゴリ | 追加済み | 全機能 | 割合 |
 | --- | ---: | ---: | ---: |
 | HTML | 3 | 215 | 1% |
-| CSS | 3 | 432 | 1% |
+| CSS | 4 | 432 | 1% |
 | JavaScript | 0 | 113 | 0% |
 | Web API | 2 | 340 | 1% |
 
@@ -19,7 +19,7 @@
 
 | Baseline | 追加済み | 全機能 | 割合 |
 | --- | ---: | ---: | ---: |
-| Newly | 6 | 115 | 5% |
+| Newly | 7 | 115 | 6% |
 | Limited | 1 | 360 | 0% |
 | Widely | 1 | 625 | 0% |
 
@@ -33,6 +33,7 @@
 | `css/functions/light-dark-image` | `light-dark-image` | Newly | 2026-11-16 |
 | `css/properties/anchor-name` | `anchor-positioning` | Limited | 2026-11-13 |
 | `css/properties/animation-timeline` | `scroll-driven-animations` | Newly | 2026-11-14 |
+| `css/values/revert-rule` | `revert-rule` | Newly | 2026-11-16 |
 | `html/custom-elements/scoped-registries` | `scoped-custom-element-registries` | Newly | 2026-11-15 |
 | `html/elements/dialog` | `dialog` | Widely | 2026-11-13 |
 
@@ -45,7 +46,6 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `ext-texture-norm16` | EXT_texture_norm16 WebGL extension | Web API | Newly | 2026-10-27 |
 | `arianotify` | ariaNotify() | Web API | Newly | 2026-09-14 |
 | `overflow-anchor` | overflow-anchor | CSS | Newly | 2026-09-14 |
-| `revert-rule` | revert-rule | CSS | Newly | 2026-09-14 |
 | `top-level-await` | Top-level await | JavaScript | Newly | 2026-09-14 |
 | `autocorrect` | autocorrect | HTML | Newly | 2026-09-11 |
 | `progress-function` | progress() | CSS | Newly | 2026-09-01 |
@@ -62,5 +62,6 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `shared-workers` | Shared worker | Web API | Newly | 2026-05-05 |
 | `contrast-color` | contrast-color() | CSS | Newly | 2026-04-10 |
 | `math-sum-precise` | Math.sumPrecise() | JavaScript | Newly | 2026-04-10 |
+| `baseline-shift` | baseline-shift | CSS | Newly | 2026-03-24 |
 
-未追加は他に 1072 件。
+未追加は他に 1071 件。

@@ -1,0 +1,14 @@
+.row { display: flex; gap: 12px; }
+figure { margin: 8px 0; font-size: 12px; }
+.card { width: 80px; height: 50px; border: 1px solid gray; }
+
+/* 規則 1: 黄色 */
+.card { background: gold; }
+
+/* 規則 2: 後ろの規則で tomato に上書き */
+.warn { background: tomato; }
+
+/* 規則 3: 同じ要素に、最後の規則で各キーワードを当てる */
+.rule   { background: revert-rule; }
+.origin { background: revert; }
+.unset  { background: unset; }
