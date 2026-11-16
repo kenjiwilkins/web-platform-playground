@@ -1,0 +1,9 @@
+title: <a>
+summary: リンクを作る要素。href を持つ <a> は、フォーカスできて :any-link に一致し、URL の各部分（host / pathname / search / hash）を読み書きできる。
+mdn: Web/HTML/Reference/Elements/a
+spec: https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element
+webFeature: a
+bcd: html.elements.a
+detect: typeof HTMLAnchorElement === 'function'
+tags: [links, url, navigation]
+added: 2026-11-16

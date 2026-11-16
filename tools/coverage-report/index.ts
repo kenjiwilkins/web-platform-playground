@@ -3,9 +3,15 @@
  *
  *   pnpm coverage                   # docs/coverage.md を更新する
  *   pnpm coverage --candidates 10   # 次に追加する候補を JSON で出力する（ファイルは触らない）
+ *   pnpm coverage --basic           # 基本機能の候補を JSON で出力する（--candidates 10 と同じ形式）
+ *   pnpm coverage --basic --candidates 15
  *
  * 候補の並び順: Baseline Newly（新しい順）→ Limited → Widely（新しい順）。
  * 「最新の Web 標準」を追うのが目的なので、新しく使えるようになった機能を先に出す。
+ *
+ * --basic: 古くから使える基本機能（h1 や a のような HTML 要素、基本の CSS プロパティ、Array などの JS、
+ * 基本の Web API）を追加するための候補。Baseline Widely だけを、使えるようになった日が古い順に出す。
+ * 廃止予定（discouraged）の機能は、どちらのモードでも除外される。
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -32,7 +38,9 @@ type Row = {
   description: string;
 };
 
-const { values } = parseArgs({ options: { candidates: { type: 'string' } } });
+const { values } = parseArgs({
+  options: { candidates: { type: 'string' }, basic: { type: 'boolean', default: false } },
+});
 
 /** BCD キーの先頭で Playground のカテゴリを決める。HTML > CSS > JS > API の順に優先する */
 const categoryOf = (f: Feature): Category | 'other' => {
@@ -72,11 +80,17 @@ const candidates = rows
       a.id.localeCompare(b.id),
   );
 
-if (values.candidates !== undefined) {
+// --basic: Widely だけを、古い順（同じ日なら id 順）に並べる
+const basicCandidates = candidates
+  .filter((r) => r.baseline === 'high')
+  .sort((a, b) => a.since.localeCompare(b.since) || a.id.localeCompare(b.id));
+
+if (values.candidates !== undefined || values.basic) {
   const n = Number(values.candidates) || 10;
+  const list = values.basic ? basicCandidates : candidates;
   console.log(
     JSON.stringify(
-      candidates.slice(0, n).map((r) => ({ ...r, baseline: label(r.baseline) })),
+      list.slice(0, n).map((r) => ({ ...r, baseline: label(r.baseline) })),
       null,
       2,
     ),
