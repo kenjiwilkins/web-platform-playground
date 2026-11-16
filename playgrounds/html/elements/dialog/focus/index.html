@@ -1,0 +1,15 @@
+<h1>dialog とフォーカス</h1>
+<p id="support"></p>
+<p>
+  <button id="open-modal">showModal() で開く</button>
+  <button id="open-modeless">show() で開く</button>
+  <input id="outside" placeholder="背景の入力欄">
+</p>
+<dialog id="dialog">
+  <form method="dialog">
+    <p>ダイアログです（Esc でも閉じられる）</p>
+    <button value="ok">OK</button>
+    <button value="cancel">キャンセル</button>
+  </form>
+</dialog>
+<pre id="log"></pre>
