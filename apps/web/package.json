@@ -18,6 +18,7 @@
     "@codemirror/state": "6.7.6",
     "@codemirror/view": "6.43.15",
     "@lezer/highlight": "1.2.5",
+    "@vercel/analytics": "2.0.1",
     "@wpp/runtime": "workspace:*",
     "@wpp/schema": "workspace:*",
     "@wpp/tokens": "workspace:*",

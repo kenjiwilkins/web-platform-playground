@@ -29,6 +29,17 @@ PARENT_ORIGINS=https://web-amber-theta-23.vercel.app,https://webplatform-playgro
 値はビルド時に検証される（`packages/schema/src/origin.ts`）。スキームの付け忘れやパス付きの値はビルドが止まる。
 変えたら再デプロイが必要（どれもビルド時に埋め込まれる）。ダッシュボードの Redeploy でよい（同じコミットの再デプロイは必ずビルドする）。
 
+## Web Analytics（Vercel）
+
+`webplatform-playground`（web）だけに入れている。`apps/web/src/layouts/Base.astro` の `<Analytics />`（`@vercel/analytics/astro`）が、
+`/_vercel/insights/script.js` を読み込んで訪問数とページビューを数える。
+
+- **ダッシュボードで有効にする**: プロジェクトの Analytics タブで Web Analytics を有効にする（コードだけでは数えられない）。有効にしたあとは再デプロイが要る。
+- ローカルの `pnpm dev` では Debug モードになり、**サーバーには何も送らず**、ページビューを console に出すだけ（`[Vercel Web Analytics] ... [view]`）。計測が入っているかの確認に使える。
+- 計測しないページ: 埋め込み用（`/embed/`、`bare`）は他サイトの iframe に入るので数えない。
+- sandbox（`web-platform-playground-sandbox`）には入れない。ユーザーのコードを実行するオリジンで、計測のスクリプトを混ぜないため。
+- 反映まで 30 秒ほどかかることがある。コンテンツブロッカーが有効だと数えられない。
+
 ## プレビューのルール
 
 1. **`renovate/*` ではプレビューを作らない。** `vercel.json` の `git.deploymentEnabled`。
