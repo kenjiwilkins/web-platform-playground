@@ -4,13 +4,13 @@
 
 - 更新日: 2026-11-16
 - 基準: web-features 3.46.0（廃止予定の機能と、HTML/CSS/JS/Web API 以外は集計から除く）
-- Playground: 12 件（web-features に紐づく機能: 12 件）
+- Playground: 13 件（web-features に紐づく機能: 13 件）
 
 ## カテゴリ別
 
 | カテゴリ | 追加済み | 全機能 | 割合 |
 | --- | ---: | ---: | ---: |
-| HTML | 4 | 215 | 2% |
+| HTML | 5 | 215 | 2% |
 | CSS | 6 | 432 | 1% |
 | JavaScript | 0 | 113 | 0% |
 | Web API | 2 | 340 | 1% |
@@ -21,7 +21,7 @@
 | --- | ---: | ---: | ---: |
 | Newly | 8 | 115 | 7% |
 | Limited | 1 | 360 | 0% |
-| Widely | 3 | 625 | 0% |
+| Widely | 4 | 625 | 1% |
 
 ## 追加済みの Playground
 
@@ -38,6 +38,7 @@
 | `css/values/revert-rule` | `revert-rule` | Newly | 2026-11-16 |
 | `html/custom-elements/scoped-registries` | `scoped-custom-element-registries` | Newly | 2026-11-15 |
 | `html/elements/a` | `a` | Widely | 2026-11-16 |
+| `html/elements/abbr` | `abbr` | Widely | 2026-11-17 |
 | `html/elements/dialog` | `dialog` | Widely | 2026-11-13 |
 
 ## 次の候補（未追加）
@@ -67,4 +68,4 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `baseline-shift` | baseline-shift | CSS | Newly | 2026-03-24 |
 | `font-family-math` | Math font family | CSS | Newly | 2026-03-24 |
 
-未追加は他に 1068 件。
+未追加は他に 1067 件。
