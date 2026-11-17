@@ -1,0 +1,16 @@
+<h1>バッテリー残量を progress() で表す</h1>
+<p id="support"></p>
+
+<div id="battery" class="battery" role="meter" aria-label="バッテリー残量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">
+  <div class="fill"></div>
+  <span class="cap"></span>
+</div>
+<p class="warn">⚠ 残りわずかです</p>
+
+<p>
+  <label>残量 <input id="level" type="range" min="0" max="100" value="80" /></label>
+  <output id="val">80</output>%
+  <button id="drain" type="button">放電する</button>
+</p>
+
+<pre id="log"></pre>

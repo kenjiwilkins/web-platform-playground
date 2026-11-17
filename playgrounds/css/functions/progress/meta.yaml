@@ -1,0 +1,10 @@
+title: progress()
+summary: 値が開始値と終了値の間のどこにあるかを、0〜1 の単位なしの数値（比）として返す CSS 関数。calc() の中で幅や色の補間に使える。
+mdn: Web/CSS/Reference/Values/progress
+spec: https://drafts.csswg.org/css-values-5/#progress
+webFeature: progress-function
+bcd: css.types.progress
+detect: CSS.supports('width', 'calc(progress(5, 0, 10) * 100px)')
+tags: [math, interpolation, calc]
+added: 2026-11-17
+variants: [basic, battery]

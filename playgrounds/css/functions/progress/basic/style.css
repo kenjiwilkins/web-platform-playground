@@ -1,0 +1,13 @@
+@property --p {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+.track { width: 300px; height: 20px; background: #ddd; }
+.bar {
+  height: 100%;
+  background: steelblue;
+  /* --v は 0〜200。100〜200 の範囲での位置を比にする */
+  --p: progress(var(--v, 50), 100, 200);
+  width: calc(var(--p) * 100%);
+}

@@ -2,16 +2,16 @@
 
 > `pnpm coverage` が生成するファイルです。手で編集しないでください。
 
-- 更新日: 2026-11-16
+- 更新日: 2026-11-17
 - 基準: web-features 3.46.0（廃止予定の機能と、HTML/CSS/JS/Web API 以外は集計から除く）
-- Playground: 13 件（web-features に紐づく機能: 13 件）
+- Playground: 14 件（web-features に紐づく機能: 14 件）
 
 ## カテゴリ別
 
 | カテゴリ | 追加済み | 全機能 | 割合 |
 | --- | ---: | ---: | ---: |
 | HTML | 5 | 215 | 2% |
-| CSS | 6 | 432 | 1% |
+| CSS | 7 | 432 | 2% |
 | JavaScript | 0 | 113 | 0% |
 | Web API | 2 | 340 | 1% |
 
@@ -19,7 +19,7 @@
 
 | Baseline | 追加済み | 全機能 | 割合 |
 | --- | ---: | ---: | ---: |
-| Newly | 8 | 115 | 7% |
+| Newly | 9 | 115 | 8% |
 | Limited | 1 | 360 | 0% |
 | Widely | 4 | 625 | 1% |
 
@@ -31,6 +31,7 @@
 | `api/streams/async-iterable-streams` | `async-iterable-streams` | Newly | 2026-11-15 |
 | `css/functions/alpha` | `alpha` | Newly | 2026-11-15 |
 | `css/functions/light-dark-image` | `light-dark-image` | Newly | 2026-11-16 |
+| `css/functions/progress` | `progress-function` | Newly | 2026-11-17 |
 | `css/properties/absolute-positioning` | `absolute-positioning` | Widely | 2026-11-16 |
 | `css/properties/anchor-name` | `anchor-positioning` | Limited | 2026-11-13 |
 | `css/properties/animation-timeline` | `scroll-driven-animations` | Newly | 2026-11-14 |
@@ -51,7 +52,6 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `arianotify` | ariaNotify() | Web API | Newly | 2026-09-14 |
 | `top-level-await` | Top-level await | JavaScript | Newly | 2026-09-14 |
 | `autocorrect` | autocorrect | HTML | Newly | 2026-09-11 |
-| `progress-function` | progress() | CSS | Newly | 2026-09-01 |
 | `sibling-count` | sibling-count() and sibling-index() | CSS | Newly | 2026-08-18 |
 | `intl-locale-info` | Intl.Locale info | JavaScript | Newly | 2026-07-21 |
 | `field-sizing` | field-sizing | CSS | Newly | 2026-06-16 |
@@ -67,5 +67,6 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `math-sum-precise` | Math.sumPrecise() | JavaScript | Newly | 2026-04-10 |
 | `baseline-shift` | baseline-shift | CSS | Newly | 2026-03-24 |
 | `font-family-math` | Math font family | CSS | Newly | 2026-03-24 |
+| `highlight` | Custom highlights | CSS | Newly | 2026-03-24 |
 
-未追加は他に 1067 件。
+未追加は他に 1066 件。
