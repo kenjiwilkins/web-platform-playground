@@ -1,0 +1,9 @@
+title: <abbr>
+summary: 略語を表す要素。title を付けると正式名称になり、既定では点線の下線が付く。title なしだと下線は付かない。
+mdn: Web/HTML/Reference/Elements/abbr
+spec: https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-abbr-element
+webFeature: abbr
+bcd: html.elements.abbr
+detect: typeof HTMLElement === 'function' && document.createElement('abbr') instanceof HTMLElement
+tags: [text, semantics, title]
+added: 2026-11-17
