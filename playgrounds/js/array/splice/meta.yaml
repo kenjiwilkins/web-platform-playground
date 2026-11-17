@@ -1,0 +1,10 @@
+title: Array.prototype.splice()
+summary: 配列を破壊的に変更して、要素の削除・挿入・置換をまとめて行う。戻り値は取り除いた要素の配列。
+mdn: Web/JavaScript/Reference/Global_Objects/Array/splice
+spec: https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array.prototype.splice
+webFeature: array-splice
+bcd: javascript.builtins.Array.splice
+detect: typeof Array.prototype.splice === 'function'
+tags: [array, mutation]
+added: 2026-11-17
+variants: [basic, pagination]

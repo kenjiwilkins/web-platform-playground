@@ -4,7 +4,7 @@
 
 - 更新日: 2026-11-17
 - 基準: web-features 3.46.0（廃止予定の機能と、HTML/CSS/JS/Web API 以外は集計から除く）
-- Playground: 14 件（web-features に紐づく機能: 14 件）
+- Playground: 15 件（web-features に紐づく機能: 15 件）
 
 ## カテゴリ別
 
@@ -12,7 +12,7 @@
 | --- | ---: | ---: | ---: |
 | HTML | 5 | 215 | 2% |
 | CSS | 7 | 432 | 2% |
-| JavaScript | 0 | 113 | 0% |
+| JavaScript | 1 | 113 | 1% |
 | Web API | 2 | 340 | 1% |
 
 ## Baseline 別
@@ -21,7 +21,7 @@
 | --- | ---: | ---: | ---: |
 | Newly | 9 | 115 | 8% |
 | Limited | 1 | 360 | 0% |
-| Widely | 4 | 625 | 1% |
+| Widely | 5 | 625 | 1% |
 
 ## 追加済みの Playground
 
@@ -41,6 +41,7 @@
 | `html/elements/a` | `a` | Widely | 2026-11-16 |
 | `html/elements/abbr` | `abbr` | Widely | 2026-11-17 |
 | `html/elements/dialog` | `dialog` | Widely | 2026-11-13 |
+| `js/array/splice` | `array-splice` | Widely | 2026-11-17 |
 
 ## 次の候補（未追加）
 
@@ -69,4 +70,4 @@ Baseline Newly（新しい順）→ Limited → Widely の順。上から選ぶ�
 | `font-family-math` | Math font family | CSS | Newly | 2026-03-24 |
 | `highlight` | Custom highlights | CSS | Newly | 2026-03-24 |
 
-未追加は他に 1066 件。
+未追加は他に 1065 件。

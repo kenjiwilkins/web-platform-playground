@@ -1,0 +1,30 @@
+<main class="app">
+  <header class="head">
+    <h1>タスク一覧</h1>
+    <p id="support" class="support"></p>
+  </header>
+
+  <section class="toolbar">
+    <label>
+      1 ページの件数
+      <select id="size">
+        <option value="3">3</option>
+        <option value="5" selected>5</option>
+        <option value="10">10</option>
+      </select>
+    </label>
+    <button id="add" type="button" class="primary">＋ このページの先頭に追加</button>
+    <button id="reset" type="button">リセット</button>
+  </section>
+
+  <p id="status" class="status" aria-live="polite"></p>
+  <ul id="list" class="list" tabindex="-1" aria-label="タスク一覧"></ul>
+
+  <nav class="pager" aria-label="ページ送り">
+    <button id="prev" type="button">‹ 前へ</button>
+    <span id="pages" class="pages"></span>
+    <button id="next" type="button">次へ ›</button>
+  </nav>
+
+  <pre id="log" class="log"></pre>
+</main>
